@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autocuidado y Respeto Propio — INNOVA PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #e91e8c;
+  --pink-light: #ff6b9d;
+  --pink-glow: rgba(233,30,140,0.25);
+  --bg-dark: #0d0b1a;
+  --bg-card: rgba(255,255,255,0.05);
+  --bg-card2: rgba(255,255,255,0.08);
+  --text: #f0e6ff;
+  --text-muted: rgba(240,230,255,0.6);
+  --border: rgba(233,30,140,0.2);
+  --star: rgba(255,255,255,0.7);
+  --accent: #c084fc;
+  --radius: 18px;
+  --radius-btn: 50px;
+  --transition: 0.3s ease;
+}
+.light-mode {
+  --bg-dark: #fef0f7;
+  --bg-card: rgba(233,30,140,0.05);
+  --bg-card2: rgba(233,30,140,0.1);
+  --text: #2a1030;
+  --text-muted: rgba(42,16,48,0.6);
+  --border: rgba(233,30,140,0.25);
+  --accent: #9333ea;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg-dark);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background var(--transition),color var(--transition);
+}
+/* Stars */
+#stars-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.5;}
+.light-mode #stars-canvas{opacity:0.08;}
+
+/* Layout */
+#app{position:relative;z-index:1;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:block;}
+
+/* Welcome */
+#welcome{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;text-align:center;padding:2rem;
+  background:radial-gradient(ellipse at 50% 0%,rgba(233,30,140,0.18) 0%,transparent 70%);
+}
+.welcome-logo{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,6vw,4rem);
+  font-weight:700;
+  background:linear-gradient(135deg,#ff6b9d,#e91e8c,#c084fc);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.15;
+  margin-bottom:1rem;
+}
+.welcome-sub{
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  color:var(--text-muted);
+  max-width:520px;
+  line-height:1.7;
+  margin-bottom:2.5rem;
+}
+.welcome-brand{
+  font-size:0.85rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--pink-light);margin-bottom:2rem;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:linear-gradient(135deg,var(--pink),var(--pink-light));
+  color:#fff;border:none;border-radius:var(--radius-btn);
+  padding:1rem 2.5rem;font-size:1.1rem;font-weight:700;
+  cursor:pointer;touch-action:manipulation;
+  box-shadow:0 4px 30px var(--pink-glow);
+  transition:transform 0.2s,box-shadow 0.2s;
+  min-height:52px;
+  font-family:'Nunito',sans-serif;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--pink-glow);}
+.btn-primary:active{transform:scale(0.97);}
+
+/* Main layout */
+#main{display:flex;min-height:100vh;}
+
+/* Sidebar desktop */
+#sidebar{
+  width:240px;min-width:240px;
+  background:rgba(13,11,26,0.95);
+  border-right:1px solid var(--border);
+  padding:1.5rem 0;
+  position:fixed;top:0;left:0;height:100vh;
+  overflow-y:auto;z-index:100;
+  transition:transform 0.3s;
+}
+.light-mode #sidebar{background:rgba(254,240,247,0.97);}
+.sidebar-logo{
+  padding:0 1.5rem 1.5rem;
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--pink-light);
+  border-bottom:1px solid var(--border);
+  margin-bottom:1rem;
+}
+.nav-item{
+  display:flex;align-items:center;gap:0.7rem;
+  padding:0.75rem 1.5rem;
+  cursor:pointer;touch-action:manipulation;
+  color:var(--text-muted);font-size:0.9rem;font-weight:500;
+  border-radius:0;
+  transition:background 0.2s,color 0.2s;
+  min-height:48px;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.nav-item:hover,.nav-item.active{
+  background:linear-gradient(90deg,rgba(233,30,140,0.15),transparent);
+  color:var(--pink-light);
+}
+.nav-item .nav-icon{font-size:1.1rem;min-width:1.4rem;}
+
+/* Content area */
+#content{margin-left:240px;padding:2rem;min-height:100vh;}
+
+/* Top bar */
+#topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:2rem;padding-bottom:1rem;
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;gap:1rem;
+}
+.topbar-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;font-weight:700;
+  color:var(--text);
+}
+.topbar-right{display:flex;align-items:center;gap:1rem;}
+.btn-icon{
+  background:var(--bg-card2);border:1px solid var(--border);
+  border-radius:50%;width:42px;height:42px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;touch-action:manipulation;
+  color:var(--text);font-size:1.1rem;
+  transition:background 0.2s;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.btn-icon:hover{background:var(--pink-glow);}
+
+/* Progress bar */
+.progress-wrap{margin-bottom:2rem;}
+.progress-label{display:flex;justify-content:space-between;font-size:0.85rem;color:var(--text-muted);margin-bottom:0.4rem;}
+.progress-bar{height:6px;background:var(--bg-card2);border-radius:99px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--pink-light));border-radius:99px;transition:width 0.5s;}
+
+/* Section panels */
+.section-panel{display:none;}
+.section-panel.active{display:block;}
+
+/* Cards */
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  margin-bottom:1.2rem;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.card:hover{border-color:var(--pink);box-shadow:0 4px 24px var(--pink-glow);}
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:600;color:var(--text);
+  margin-bottom:0.5rem;cursor:pointer;touch-action:manipulation;
+  display:flex;justify-content:space-between;align-items:center;
+  min-height:48px;
+}
+.card-title .toggle-icon{color:var(--pink-light);transition:transform 0.3s;font-size:1rem;}
+.card-body{display:none;color:var(--text-muted);font-size:0.95rem;line-height:1.7;margin-top:0.8rem;}
+.card-body.open{display:block;}
+.card-title.open .toggle-icon{transform:rotate(180deg);}
+
+/* Quote block */
+.quote-block{
+  border-left:4px solid var(--pink);
+  padding:1rem 1.5rem;
+  background:rgba(233,30,140,0.07);
+  border-radius:0 12px 12px 0;
+  margin:1rem 0;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:1.05rem;
+  color:var(--text);
+}
+
+/* Steps */
+.steps-list{display:flex;flex-direction:column;gap:1rem;margin:1rem 0;}
+.step{display:flex;gap:1rem;align-items:flex-start;}
+.step-num{
+  min-width:32px;height:32px;
+  background:linear-gradient(135deg,var(--pink),var(--pink-light));
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:0.85rem;color:#fff;flex-shrink:0;
+}
+.step-text{color:var(--text-muted);font-size:0.95rem;line-height:1.6;padding-top:0.1rem;}
+
+/* Reflection input */
+.reflection-wrap{margin:1rem 0;}
+.reflection-label{font-size:0.9rem;color:var(--pink-light);margin-bottom:0.5rem;font-weight:600;}
+.reflection-input{
+  width:100%;background:var(--bg-card2);border:1px solid var(--border);
+  border-radius:12px;padding:0.9rem 1rem;color:var(--text);
+  font-family:'Nunito',sans-serif;font-size:0.95rem;resize:vertical;min-height:80px;
+  transition:border-color 0.2s;
+}
+.reflection-input:focus{outline:none;border-color:var(--pink);}
+.save-note-btn{
+  margin-top:0.5rem;
+  background:transparent;border:1px solid var(--pink);
+  color:var(--pink-light);border-radius:var(--radius-btn);
+  padding:0.5rem 1.5rem;cursor:pointer;touch-action:manipulation;
+  font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:600;
+  transition:background 0.2s;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.save-note-btn:hover{background:var(--pink-glow);}
+
+/* Checklist */
+.checklist-item{
+  display:flex;align-items:flex-start;gap:0.8rem;padding:0.75rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  cursor:pointer;touch-action:manipulation;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.checklist-item:last-child{border-bottom:none;}
+.check-box{
+  width:22px;height:22px;min-width:22px;
+  border:2px solid var(--pink);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:0.8rem;transition:background 0.2s;
+  flex-shrink:0;margin-top:2px;
+}
+.checklist-item.checked .check-box{background:var(--pink);}
+.check-label{color:var(--text-muted);font-size:0.95rem;line-height:1.5;}
+.checklist-item.checked .check-label{text-decoration:line-through;opacity:0.6;}
+
+/* Mood */
+.mood-grid{display:flex;flex-wrap:wrap;gap:1rem;margin:1.5rem 0;}
+.mood-btn{
+  flex:1;min-width:130px;
+  background:var(--bg-card);border:2px solid var(--border);
+  border-radius:var(--radius);padding:1.2rem 1rem;
+  text-align:center;cursor:pointer;touch-action:manipulation;
+  transition:all 0.2s;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  min-height:90px;
+}
+.mood-btn:hover,.mood-btn.selected{border-color:var(--pink);background:rgba(233,30,140,0.12);}
+.mood-emoji{font-size:2rem;display:block;margin-bottom:0.4rem;}
+.mood-label{font-size:0.85rem;font-weight:600;color:var(--text-muted);}
+.mood-btn.selected .mood-label{color:var(--pink-light);}
+.mood-result{
+  background:rgba(233,30,140,0.1);border:1px solid var(--pink);
+  border-radius:var(--radius);padding:1.5rem;margin-top:1rem;
+  display:none;
+}
+.mood-result.show{display:block;}
+.mood-result h3{color:var(--pink-light);margin-bottom:1rem;font-family:'Playfair Display',serif;}
+.mood-result ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
+.mood-result li{color:var(--text-muted);font-size:0.95rem;display:flex;gap:0.5rem;align-items:flex-start;}
+
+/* Quick test */
+.test-item{margin-bottom:1.5rem;}
+.test-question{color:var(--text);font-weight:600;margin-bottom:0.8rem;font-size:0.95rem;}
+.star-row{display:flex;gap:0.5rem;}
+.star-btn{
+  font-size:1.5rem;cursor:pointer;touch-action:manipulation;
+  transition:transform 0.15s;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;
+}
+.star-btn:hover{transform:scale(1.2);}
+.test-result{
+  background:rgba(233,30,140,0.1);border:1px solid var(--pink);
+  border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;display:none;text-align:center;
+}
+.test-result.show{display:block;}
+.test-result .result-icon{font-size:3rem;margin-bottom:0.5rem;}
+.test-result .result-msg{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--pink-light);}
+.btn-secondary{
+  background:var(--bg-card2);border:1px solid var(--border);
+  border-radius:var(--radius-btn);padding:0.7rem 1.8rem;
+  color:var(--text);cursor:pointer;touch-action:manipulation;
+  font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:600;
+  transition:border-color 0.2s,background 0.2s;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  min-height:48px;
+}
+.btn-secondary:hover{border-color:var(--pink);background:var(--pink-glow);}
+
+/* Carousel */
+.carousel-wrap{position:relative;overflow:hidden;border-radius:var(--radius);margin:1rem 0;}
+.carousel-track{display:flex;transition:transform 0.4s ease;}
+.carousel-slide{
+  min-width:100%;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:2rem;
+  text-align:center;
+}
+.carousel-slide .slide-icon{font-size:3rem;margin-bottom:1rem;}
+.carousel-slide .slide-title{
+  font-family:'Playfair Display',serif;font-size:1.3rem;
+  color:var(--pink-light);margin-bottom:0.8rem;
+}
+.carousel-slide .slide-text{color:var(--text-muted);font-size:0.95rem;line-height:1.7;}
+.carousel-controls{display:flex;justify-content:center;gap:1rem;margin-top:1rem;align-items:center;}
+.carousel-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--border);cursor:pointer;touch-action:manipulation;
+  transition:background 0.2s;-webkit-tap-highlight-color:rgba(0,0,0,0);
+  min-width:20px;min-height:20px;display:flex;align-items:center;justify-content:center;
+}
+.carousel-dot.active{background:var(--pink);}
+.carousel-arrow{
+  background:var(--bg-card2);border:1px solid var(--border);
+  border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;touch-action:manipulation;color:var(--text);font-size:1rem;
+  transition:background 0.2s;-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.carousel-arrow:hover{background:var(--pink-glow);}
+
+/* Ruleta */
+#roulette-wrap{text-align:center;padding:1rem 0;}
+#roulette-canvas{display:block;margin:0 auto;max-width:320px;width:100%;}
+#spin-btn{margin-top:1.5rem;}
+#roulette-result{
+  margin-top:1.5rem;padding:1.5rem;
+  background:rgba(233,30,140,0.1);border:1px solid var(--pink);
+  border-radius:var(--radius);display:none;text-align:center;
+}
+#roulette-result.show{display:block;}
+#roulette-result .result-text{
+  font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);line-height:1.6;
+}
+
+/* Scratch card */
+.scratch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;}
+.scratch-card{
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  min-height:150px;cursor:pointer;touch-action:manipulation;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.scratch-overlay{
+  position:absolute;inset:0;z-index:2;
+  background:linear-gradient(135deg,#2d0a50,#1a0630);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 0.4s,transform 0.4s;
+  border:2px solid var(--pink);border-radius:var(--radius);
+}
+.scratch-overlay.scratched{opacity:0;transform:scale(0.95);pointer-events:none;}
+.scratch-hint{color:var(--pink-light);font-size:0.85rem;margin-top:0.5rem;}
+.scratch-content{
+  position:relative;z-index:1;
+  background:rgba(233,30,140,0.1);border:2px solid var(--pink);
+  border-radius:var(--radius);min-height:150px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;
+  text-align:center;
+}
+.scratch-content .s-icon{font-size:2rem;margin-bottom:0.5rem;}
+.scratch-content .s-text{font-size:0.9rem;color:var(--text);font-weight:600;line-height:1.5;}
+
+/* Quiz */
+.quiz-question{margin-bottom:2rem;}
+.quiz-q-text{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);margin-bottom:1rem;}
+.quiz-options{display:flex;flex-direction:column;gap:0.6rem;}
+.quiz-option{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:12px;padding:0.9rem 1rem;
+  cursor:pointer;touch-action:manipulation;
+  color:var(--text-muted);font-size:0.95rem;
+  transition:all 0.2s;-webkit-tap-highlight-color:rgba(0,0,0,0);
+  text-align:left;min-height:48px;
+}
+.quiz-option:hover{border-color:var(--pink);color:var(--text);}
+.quiz-option.correct{background:rgba(34,197,94,0.15);border-color:#22c55e;color:#86efac;}
+.quiz-option.wrong{background:rgba(239,68,68,0.15);border-color:#ef4444;color:#fca5a5;}
+.quiz-progress{font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;}
+#quiz-final{display:none;text-align:center;padding:2rem;}
+#quiz-final.show{display:block;}
+#quiz-score-circle{
+  width:100px;height:100px;border-radius:50%;
+  background:linear-gradient(135deg,var(--pink),var(--pink-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;font-weight:700;color:#fff;margin:0 auto 1.5rem;
+}
+
+/* Diario */
+.diary-entries{margin-top:1.5rem;display:flex;flex-direction:column;gap:0.8rem;}
+.diary-entry{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:12px;padding:1rem;
+}
+.diary-entry-date{font-size:0.8rem;color:var(--pink-light);margin-bottom:0.3rem;}
+.diary-entry-text{font-size:0.9rem;color:var(--text-muted);line-height:1.5;}
+.diary-entry-del{
+  background:none;border:none;color:rgba(239,68,68,0.5);cursor:pointer;
+  float:right;font-size:1rem;transition:color 0.2s;
+  min-width:32px;min-height:32px;display:flex;align-items:center;justify-content:center;
+  touch-action:manipulation;
+}
+.diary-entry-del:hover{color:#ef4444;}
+
+/* Logros */
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin:1rem 0;}
+.badge{
+  background:var(--bg-card);border:2px solid var(--border);
+  border-radius:var(--radius);padding:1.2rem;text-align:center;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  opacity:0.4;
+}
+.badge.earned{opacity:1;border-color:var(--pink);box-shadow:0 0 20px var(--pink-glow);}
+.badge-icon{font-size:2.5rem;margin-bottom:0.5rem;}
+.badge-name{font-size:0.85rem;font-weight:700;color:var(--text);}
+.badge-desc{font-size:0.75rem;color:var(--text-muted);margin-top:0.3rem;}
+
+/* Oracle card */
+.oracle-wrap{text-align:center;padding:1rem 0;}
+#oracle-card{
+  width:260px;max-width:90vw;min-height:380px;margin:0 auto 1.5rem;
+  border-radius:22px;
+  background:linear-gradient(145deg,#2d0a50,#1a0630);
+  border:2px solid var(--pink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem 1.5rem;text-align:center;
+  box-shadow:0 0 40px var(--pink-glow);
+  transition:transform 0.4s;
+  cursor:pointer;touch-action:manipulation;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+#oracle-card:hover{transform:scale(1.02);}
+#oracle-card.flip{animation:flipCard 0.5s ease;}
+@keyframes flipCard{
+  0%{transform:rotateY(0);}
+  50%{transform:rotateY(90deg);}
+  100%{transform:rotateY(0);}
+}
+.oracle-decor{font-size:2.5rem;margin-bottom:1rem;}
+.oracle-text{
+  font-family:'Playfair Display',serif;font-size:1.1rem;
+  color:var(--text);line-height:1.7;font-style:italic;
+}
+.oracle-hint{font-size:0.8rem;color:var(--text-muted);margin-top:1rem;}
+
+/* Challenges */
+.challenge-box{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;margin:1rem 0;text-align:center;
+}
+.challenge-emoji{font-size:3rem;margin-bottom:1rem;}
+.challenge-text{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);margin-bottom:1rem;}
+.challenge-sub{font-size:0.9rem;color:var(--text-muted);}
+
+/* Awareness questions */
+.awareness-q{
+  background:var(--bg-card);border-left:4px solid var(--accent);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:1.2rem 1.5rem;margin-bottom:1.2rem;
+}
+.awareness-q-text{font-family:'Playfair Display',serif;color:var(--text);font-size:1rem;margin-bottom:0.8rem;}
+
+/* Section grid */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:640px){.two-col{grid-template-columns:1fr;}}
+
+/* Section title */
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;font-weight:700;color:var(--text);
+  margin-bottom:0.3rem;
+}
+.section-subtitle{color:var(--text-muted);font-size:0.95rem;margin-bottom:2rem;line-height:1.6;}
+
+/* Toast */
+#toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--pink),var(--pink-light));
+  color:#fff;padding:0.8rem 1.8rem;border-radius:var(--radius-btn);
+  font-size:0.9rem;font-weight:600;z-index:999;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+  white-space:nowrap;
+}
+#toast.show{opacity:1;}
+
+/* Bottom nav mobile */
+#bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(13,11,26,0.97);
+  border-top:1px solid var(--border);
+  z-index:100;padding:0.5rem 0.3rem;
+  overflow-x:auto;
+  justify-content:flex-start;
+  gap:0;
+  -webkit-overflow-scrolling:touch;
+}
+.light-mode #bottom-nav{background:rgba(254,240,247,0.97);}
+.bottom-nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:0.2rem;
+  padding:0.4rem 0.8rem;cursor:pointer;touch-action:manipulation;
+  color:var(--text-muted);font-size:0.65rem;font-weight:500;
+  border-radius:10px;white-space:nowrap;min-width:60px;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  transition:color 0.2s;
+}
+.bottom-nav-item .bn-icon{font-size:1.3rem;}
+.bottom-nav-item.active,.bottom-nav-item:hover{color:var(--pink-light);}
+
+/* Hamburger */
+#hamburger{
+  display:none;background:none;border:none;cursor:pointer;
+  touch-action:manipulation;padding:8px;
+  color:var(--text);font-size:1.4rem;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+#sidebar-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99;
+}
+#sidebar-overlay.show{display:block;}
+
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.mobile-open{transform:translateX(0);}
+  #content{margin-left:0;padding:1rem;padding-bottom:90px;}
+  #hamburger{display:flex;}
+  #bottom-nav{display:flex;}
+}
+
+button,.clickable{
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  touch-action:manipulation;
+}
+
+/* Chapter reading */
+.chapter-nav{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.chap-btn{
+  padding:0.5rem 1rem;border-radius:var(--radius-btn);
+  background:var(--bg-card);border:1px solid var(--border);
+  cursor:pointer;touch-action:manipulation;
+  color:var(--text-muted);font-size:0.85rem;font-weight:600;
+  transition:all 0.2s;-webkit-tap-highlight-color:rgba(0,0,0,0);min-height:40px;
+}
+.chap-btn.active,.chap-btn:hover{background:var(--pink-glow);border-color:var(--pink);color:var(--pink-light);}
+.chapter-content{display:none;}
+.chapter-content.active{display:block;}
+.chapter-content h2{
+  font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--pink-light);
+  margin-bottom:1rem;
+}
+.chapter-content h3{
+  font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--accent);
+  margin:1.2rem 0 0.5rem;
+}
+.chapter-content p{color:var(--text-muted);line-height:1.7;font-size:0.95rem;margin-bottom:0.8rem;}
+.chapter-content ul{list-style:none;margin:0.5rem 0;display:flex;flex-direction:column;gap:0.5rem;}
+.chapter-content ul li{color:var(--text-muted);font-size:0.95rem;padding-left:1.2rem;position:relative;line-height:1.6;}
+.chapter-content ul li::before{content:"🌸";position:absolute;left:0;font-size:0.7rem;top:0.25rem;}
+.chapter-content .technique-box{
+  background:rgba(192,132,252,0.08);border:1px solid var(--accent);
+  border-radius:var(--radius);padding:1.2rem;margin:1rem 0;
+}
+.chapter-content .technique-box h4{color:var(--accent);margin-bottom:0.7rem;font-weight:700;}
+.chapter-content .highlight-box{
+  background:rgba(233,30,140,0.08);border-left:3px solid var(--pink);
+  padding:1rem 1.2rem;border-radius:0 12px 12px 0;margin:1rem 0;
+  font-style:italic;color:var(--text);
+}
+
+/* Profile test */
+.profile-option{
+  display:flex;gap:0.8rem;align-items:flex-start;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:12px;padding:0.9rem 1rem;
+  cursor:pointer;touch-action:manipulation;
+  transition:all 0.2s;-webkit-tap-highlight-color:rgba(0,0,0,0);
+  margin-bottom:0.6rem;min-height:48px;
+}
+.profile-option:hover,.profile-option.selected{border-color:var(--pink);background:rgba(233,30,140,0.1);}
+.profile-option input[type=radio]{accent-color:var(--pink);margin-top:2px;}
+.profile-option-text{color:var(--text-muted);font-size:0.9rem;}
+.profile-q-text{font-family:'Playfair Display',serif;font-size:1rem;color:var(--text);margin-bottom:0.8rem;}
+#profile-result{
+  display:none;background:linear-gradient(135deg,rgba(233,30,140,0.12),rgba(192,132,252,0.1));
+  border:1px solid var(--pink);border-radius:var(--radius);padding:2rem;text-align:center;
+}
+#profile-result.show{display:block;}
+#profile-result h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--pink-light);margin-bottom:1rem;}
+#profile-result p{color:var(--text-muted);font-size:0.95rem;line-height:1.7;}
+#profile-result .profile-icon{font-size:3.5rem;margin-bottom:1rem;}
+
+/* Tabs */
+.tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.tab-btn{
+  padding:0.6rem 1.3rem;border-radius:var(--radius-btn);
+  background:var(--bg-card);border:1px solid var(--border);
+  cursor:pointer;touch-action:manipulation;
+  color:var(--text-muted);font-size:0.85rem;font-weight:600;
+  transition:all 0.2s;-webkit-tap-highlight-color:rgba(0,0,0,0);min-height:42px;
+}
+.tab-btn.active,.tab-btn:hover{background:var(--pink-glow);border-color:var(--pink);color:var(--pink-light);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* Scroll top */
+#scroll-top{
+  position:fixed;bottom:90px;right:1rem;
+  background:linear-gradient(135deg,var(--pink),var(--pink-light));
+  border:none;border-radius:50%;width:44px;height:44px;
+  display:none;align-items:center;justify-content:center;
+  cursor:pointer;touch-action:manipulation;
+  color:#fff;font-size:1.1rem;z-index:200;
+  box-shadow:0 4px 16px var(--pink-glow);
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+#scroll-top.show{display:flex;}
+
+/* Mood history */
+.mood-history{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1rem;}
+.mood-hist-item{
+  padding:0.4rem 0.8rem;border-radius:var(--radius-btn);
+  background:var(--bg-card);border:1px solid var(--border);
+  font-size:0.8rem;color:var(--text-muted);
+}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<div id="app">
+
+<!-- WELCOME SCREEN -->
+<div id="welcome" class="screen active">
+  <div class="welcome-brand">✦ INNOVA PRO ✦</div>
+  <h1 class="welcome-logo">Autocuidado<br>&amp; Respeto Propio</h1>
+  <p class="welcome-sub">Cómo tratarte como tratas a quienes amas. Una guía práctica para convertir el autocuidado en una expresión diaria de dignidad, amor y respeto propio.</p>
+  <button class="btn-primary" onclick="enterApp()">✨ Comenzar mi camino</button>
+</div>
+
+<!-- MAIN APP -->
+<div id="main" class="screen">
+  <!-- Sidebar overlay -->
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <div class="sidebar-logo">💗 Autocuidado</div>
+    <div class="nav-item active" onclick="showSection('home')" data-section="home"><span class="nav-icon">🏠</span> Inicio</div>
+    <div class="nav-item" onclick="showSection('chapters')" data-section="chapters"><span class="nav-icon">📖</span> Capítulos</div>
+    <div class="nav-item" onclick="showSection('concepts')" data-section="concepts"><span class="nav-icon">🗂️</span> Conceptos</div>
+    <div class="nav-item" onclick="showSection('reflection')" data-section="reflection"><span class="nav-icon">✍️</span> Reflexiones</div>
+    <div class="nav-item" onclick="showSection('mood')" data-section="mood"><span class="nav-icon">💫</span> ¿Cómo estoy?</div>
+    <div class="nav-item" onclick="showSection('quicktest')" data-section="quicktest"><span class="nav-icon">✨</span> Test Rápido</div>
+    <div class="nav-item" onclick="showSection('profile')" data-section="profile"><span class="nav-icon">🎯</span> Perfil Propio</div>
+    <div class="nav-item" onclick="showSection('games')" data-section="games"><span class="nav-icon">🎡</span> Juegos</div>
+    <div class="nav-item" onclick="showSection('oracle')" data-section="oracle"><span class="nav-icon">🔮</span> Oráculo</div>
+    <div class="nav-item" onclick="showSection('challenges')" data-section="challenges"><span class="nav-icon">🎯</span> Desafíos</div>
+    <div class="nav-item" onclick="showSection('awareness')" data-section="awareness"><span class="nav-icon">💡</span> Despertar</div>
+    <div class="nav-item" onclick="showSection('diary')" data-section="diary"><span class="nav-icon">📔</span> Diario</div>
+    <div class="nav-item" onclick="showSection('checklist')" data-section="checklist"><span class="nav-icon">✅</span> Hábitos</div>
+    <div class="nav-item" onclick="showSection('badges')" data-section="badges"><span class="nav-icon">🏆</span> Logros</div>
+  </nav>
+
+  <!-- Content -->
+  <div id="content">
+    <!-- Topbar -->
+    <div id="topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button id="hamburger" onclick="toggleSidebar()" aria-label="Menú">☰</button>
+        <div class="topbar-title" id="section-title">Inicio</div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn-icon" onclick="toggleTheme()" title="Modo día/noche" id="theme-btn">🌙</button>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Tu progreso</span><span id="progress-pct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+
+    <!-- ===== HOME ===== -->
+    <div class="section-panel active" id="panel-home">
+      <div class="section-title">¡Bienvenida de vuelta 💗</div>
+      <p class="section-subtitle">Tu espacio sagrado de autocuidado. Explora los módulos y construye una relación amorosa contigo misma.</p>
+      <div class="quote-block">"El autocuidado no es un premio por sufrir lo suficiente. Es un derecho básico que mereces simplemente por existir."</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:1.5rem;">
+        <div class="card" style="cursor:pointer" onclick="showSection('chapters')">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">📖</div>
+          <div style="font-weight:700;color:var(--pink-light);margin-bottom:0.3rem;">Leer el libro</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Navega todos los capítulos</div>
+        </div>
+        <div class="card" style="cursor:pointer" onclick="showSection('mood')">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">💫</div>
+          <div style="font-weight:700;color:var(--pink-light);margin-bottom:0.3rem;">¿Cómo estoy hoy?</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Registro emocional + recomendación</div>
+        </div>
+        <div class="card" style="cursor:pointer" onclick="showSection('oracle')">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">🔮</div>
+          <div style="font-weight:700;color:var(--pink-light);margin-bottom:0.3rem;">Oráculo de amor</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Mensajes para el alma</div>
+        </div>
+        <div class="card" style="cursor:pointer" onclick="showSection('games')">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">🎡</div>
+          <div style="font-weight:700;color:var(--pink-light);margin-bottom:0.3rem;">Juegos de bienestar</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Ruleta · Raspadita · Quiz</div>
+        </div>
+        <div class="card" style="cursor:pointer" onclick="showSection('diary')">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">📔</div>
+          <div style="font-weight:700;color:var(--pink-light);margin-bottom:0.3rem;">Diario personal</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Escribe y guarda tus reflexiones</div>
+        </div>
+        <div class="card" style="cursor:pointer" onclick="showSection('badges')">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">🏆</div>
+          <div style="font-weight:700;color:var(--pink-light);margin-bottom:0.3rem;">Mis logros</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Medallas que has ganado</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CHAPTERS ===== -->
+    <div class="section-panel" id="panel-chapters">
+      <div class="section-title">📖 Capítulos</div>
+      <p class="section-subtitle">El libro completo navegable. Lee, reflexiona y aprende a tu ritmo.</p>
+      <div class="chapter-nav" id="chap-nav"></div>
+      <div id="chap-contents"></div>
+    </div>
+
+    <!-- ===== CONCEPTS ===== -->
+    <div class="section-panel" id="panel-concepts">
+      <div class="section-title">🗂️ Conceptos Clave</div>
+      <p class="section-subtitle">Ideas fundamentales del libro. Toca para expandir y profundizar.</p>
+      <div id="concepts-list"></div>
+    </div>
+
+    <!-- ===== REFLECTION ===== -->
+    <div class="section-panel" id="panel-reflection">
+      <div class="section-title">✍️ Preguntas de Reflexión</div>
+      <p class="section-subtitle">Dedica unos minutos a estas preguntas. Tus respuestas se guardan automáticamente.</p>
+      <div id="reflections-list"></div>
+    </div>
+
+    <!-- ===== MOOD ===== -->
+    <div class="section-panel" id="panel-mood">
+      <div class="section-title">💫 ¿Cómo te sientes hoy?</div>
+      <p class="section-subtitle">Elige tu emoción del momento y recibe una recomendación personalizada de autocuidado.</p>
+      <div class="mood-grid">
+        <button class="mood-btn" onclick="selectMood('agotada')" id="mood-agotada" data-mood="agotada"><span class="mood-emoji">😴</span><span class="mood-label">Agotada</span></button>
+        <button class="mood-btn" onclick="selectMood('triste')" id="mood-triste" data-mood="triste"><span class="mood-emoji">😔</span><span class="mood-label">Triste</span></button>
+        <button class="mood-btn" onclick="selectMood('frustrada')" id="mood-frustrada" data-mood="frustrada"><span class="mood-emoji">😡</span><span class="mood-label">Frustrada</span></button>
+        <button class="mood-btn" onclick="selectMood('ansiosa')" id="mood-ansiosa" data-mood="ansiosa"><span class="mood-emoji">😰</span><span class="mood-label">Ansiosa</span></button>
+        <button class="mood-btn" onclick="selectMood('feliz')" id="mood-feliz" data-mood="feliz"><span class="mood-emoji">😊</span><span class="mood-label">Feliz</span></button>
+      </div>
+      <div class="mood-result" id="mood-result"></div>
+      <div style="margin-top:2rem;">
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:0.8rem;">📅 Historial de emociones</div>
+        <div class="mood-history" id="mood-history"></div>
+      </div>
+    </div>
+
+    <!-- ===== QUICK TEST ===== -->
+    <div class="section-panel" id="panel-quicktest">
+      <div class="section-title">✨ ¿Cómo te estás tratando hoy?</div>
+      <p class="section-subtitle">Puntúa del 1 al 5 cada pregunta y descubre dónde estás en tu camino de autocuidado.</p>
+      <div id="quick-test-items"></div>
+      <button class="btn-primary" onclick="calcQuickTest()" style="margin-top:1rem;">Ver mi resultado</button>
+      <div class="test-result" id="quick-test-result">
+        <div class="result-icon" id="qt-icon"></div>
+        <div class="result-msg" id="qt-msg"></div>
+        <p id="qt-detail" style="color:var(--text-muted);font-size:0.9rem;margin-top:0.8rem;line-height:1.6;"></p>
+      </div>
+    </div>
+
+    <!-- ===== PROFILE TEST ===== -->
+    <div class="section-panel" id="panel-profile">
+      <div class="section-title">🎯 Tu Perfil de Autocuidado</div>
+      <p class="section-subtitle">Responde estas preguntas con honestidad. Descubrirás qué tipo de relación tienes contigo misma.</p>
+      <div id="profile-questions"></div>
+      <button class="btn-primary" onclick="calcProfile()" id="profile-calc-btn" style="margin-top:1rem;">Descubrir mi perfil</button>
+      <div id="profile-result"></div>
+    </div>
+
+    <!-- ===== GAMES ===== -->
+    <div class="section-panel" id="panel-games">
+      <div class="section-title">🎮 Juegos de Bienestar</div>
+      <p class="section-subtitle">Aprende jugando. Cada juego te acerca más a ti misma.</p>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('games','ruleta')">🎡 Ruleta</button>
+        <button class="tab-btn" onclick="showTab('games','scratch')">🎫 Raspadita</button>
+        <button class="tab-btn" onclick="showTab('games','quiz')">❓ Quiz</button>
+      </div>
+      <!-- Ruleta -->
+      <div class="tab-content active" id="games-tab-ruleta">
+        <div id="roulette-wrap">
+          <p style="color:var(--text-muted);margin-bottom:1rem;font-size:0.9rem;">Gira la ruleta para recibir un ejercicio de autocuidado aleatorio</p>
+          <canvas id="roulette-canvas" width="320" height="320"></canvas>
+          <div id="roulette-result"><div class="result-text" id="roulette-result-text"></div></div>
+          <button class="btn-primary" id="spin-btn" onclick="spinRoulette()">🎡 Girar</button>
+        </div>
+      </div>
+      <!-- Scratch -->
+      <div class="tab-content" id="games-tab-scratch">
+        <p style="color:var(--text-muted);margin-bottom:1rem;font-size:0.9rem;">Toca las cartas para revelar tu mensaje sorpresa</p>
+        <div class="scratch-grid" id="scratch-grid"></div>
+        <button class="btn-secondary" onclick="resetScratch()" style="margin-top:1rem;">🔄 Nuevas cartas</button>
+      </div>
+      <!-- Quiz -->
+      <div class="tab-content" id="games-tab-quiz">
+        <div id="quiz-wrap">
+          <div class="quiz-progress" id="quiz-progress"></div>
+          <div id="quiz-question-box"></div>
+          <div id="quiz-final">
+            <div id="quiz-score-circle"></div>
+            <h3 style="font-family:'Playfair Display',serif;margin-bottom:0.5rem;color:var(--pink-light);" id="quiz-grade"></h3>
+            <p style="color:var(--text-muted);font-size:0.9rem;" id="quiz-msg"></p>
+            <button class="btn-primary" onclick="resetQuiz()" style="margin-top:1.5rem;">🔄 Jugar de nuevo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ORACLE ===== -->
+    <div class="section-panel" id="panel-oracle">
+      <div class="section-title">🔮 Oráculo de Amor Propio</div>
+      <p class="section-subtitle">Toca la carta para revelar tu mensaje del día. ¡Compártela en Instagram!</p>
+      <div class="oracle-wrap">
+        <div id="oracle-card" onclick="drawOracle()">
+          <div class="oracle-decor">✨</div>
+          <div class="oracle-text" id="oracle-text">Toca para revelar tu mensaje</div>
+          <div class="oracle-hint">Toca para nueva carta</div>
+        </div>
+        <button class="btn-primary" onclick="drawOracle()">🔮 Nueva carta</button>
+      </div>
+      <div id="oracle-carousel-wrap">
+        <div style="font-weight:700;color:var(--pink-light);margin:2rem 0 1rem;">Últimas cartas reveladas</div>
+        <div id="oracle-history" style="display:flex;flex-direction:column;gap:0.8rem;"></div>
+      </div>
+    </div>
+
+    <!-- ===== CHALLENGES ===== -->
+    <div class="section-panel" id="panel-challenges">
+      <div class="section-title">🎯 Desafío del Día</div>
+      <p class="section-subtitle">Un nuevo desafío cada vez. Acéptalos para fortalecer tu relación contigo misma.</p>
+      <div class="challenge-box" id="challenge-box">
+        <div class="challenge-emoji" id="challenge-emoji">🌸</div>
+        <div class="challenge-text" id="challenge-text">Cargando tu desafío...</div>
+        <div class="challenge-sub" id="challenge-sub"></div>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;">
+        <button class="btn-primary" onclick="newChallenge()">🎲 Nuevo desafío</button>
+        <button class="btn-secondary" onclick="completeChallenge()">✅ ¡Lo cumplí!</button>
+      </div>
+      <div style="margin-top:2rem;">
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:0.8rem;">Desafíos completados: <span id="challenge-count">0</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="challenge-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- ===== AWARENESS ===== -->
+    <div class="section-panel" id="panel-awareness">
+      <div class="section-title">💡 Despertar de Consciencia</div>
+      <p class="section-subtitle">Preguntas directas para profundizar en tu autoconocimiento. Tómate el tiempo que necesites.</p>
+      <div id="awareness-list"></div>
+    </div>
+
+    <!-- ===== DIARY ===== -->
+    <div class="section-panel" id="panel-diary">
+      <div class="section-title">📔 Mi Diario</div>
+      <p class="section-subtitle">Tu espacio privado. Escribe sin filtros, sin juicios. Todo se guarda automáticamente.</p>
+      <div class="card">
+        <div class="reflection-label">¿Qué quiero expresar hoy?</div>
+        <textarea class="reflection-input" id="diary-input" rows="5" placeholder="Escribe libremente... no hay respuestas correctas ni incorrectas."></textarea>
+        <button class="btn-primary" onclick="saveDiaryEntry()" style="margin-top:0.8rem;">💾 Guardar entrada</button>
+      </div>
+      <div class="diary-entries" id="diary-entries"></div>
+    </div>
+
+    <!-- ===== CHECKLIST ===== -->
+    <div class="section-panel" id="panel-checklist">
+      <div class="section-title">✅ Mis Hábitos de Autocuidado</div>
+      <p class="section-subtitle">Tu lista semanal de autocuidado. Marca lo que cumpliste y celebra tu progreso.</p>
+      <div class="card">
+        <div id="checklist-items"></div>
+      </div>
+      <div style="margin-top:1rem;">
+        <div class="progress-label"><span>Hábitos completados</span><span id="check-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="check-fill" style="width:0%"></div></div>
+      </div>
+      <button class="btn-secondary" onclick="resetChecklist()" style="margin-top:1rem;">🔄 Reiniciar semana</button>
+    </div>
+
+    <!-- ===== BADGES ===== -->
+    <div class="section-panel" id="panel-badges">
+      <div class="section-title">🏆 Mis Logros</div>
+      <p class="section-subtitle">Cada acción de autocuidado merece ser celebrada. Estos son los tuyos.</p>
+      <div class="badges-grid" id="badges-grid"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+</div><!-- /app -->
+
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div id="toast">✨ Guardado</div>
+
+<!-- Bottom nav -->
+<div id="bottom-nav">
+  <div class="bottom-nav-item active" onclick="showSection('home')" data-section="home"><span class="bn-icon">🏠</span>Inicio</div>
+  <div class="bottom-nav-item" onclick="showSection('chapters')" data-section="chapters"><span class="bn-icon">📖</span>Libro</div>
+  <div class="bottom-nav-item" onclick="showSection('mood')" data-section="mood"><span class="bn-icon">💫</span>Cómo estoy</div>
+  <div class="bottom-nav-item" onclick="showSection('games')" data-section="games"><span class="bn-icon">🎡</span>Juegos</div>
+  <div class="bottom-nav-item" onclick="showSection('oracle')" data-section="oracle"><span class="bn-icon">🔮</span>Oráculo</div>
+  <div class="bottom-nav-item" onclick="showSection('challenges')" data-section="challenges"><span class="bn-icon">🎯</span>Desafíos</div>
+  <div class="bottom-nav-item" onclick="showSection('diary')" data-section="diary"><span class="bn-icon">📔</span>Diario</div>
+  <div class="bottom-nav-item" onclick="showSection('badges')" data-section="badges"><span class="bn-icon">🏆</span>Logros</div>
+</div>
+
+<script>
+// ===== STARS =====
+(function(){
+  const c=document.getElementById('stars-canvas');
+  const ctx=c.getContext('2d');
+  let stars=[];
+  function resize(){c.width=window.innerWidth;c.height=window.innerHeight;}
+  function init(){stars=[];for(let i=0;i<150;i++)stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+0.2,a:Math.random(),da:(Math.random()-0.5)*0.008});}
+  function draw(){ctx.clearRect(0,0,c.width,c.height);stars.forEach(s=>{s.a+=s.da;if(s.a>1||s.a<0)s.da*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${s.a})`;ctx.fill();});requestAnimationFrame(draw);}
+  resize();init();draw();
+  window.addEventListener('resize',()=>{resize();init();});
+})();
+
+// ===== STORAGE =====
+function store(k,v){try{localStorage.setItem('ac_'+k,JSON.stringify(v));}catch(e){}}
+function load(k,def){try{const v=localStorage.getItem('ac_'+k);return v!==null?JSON.parse(v):def;}catch(e){return def;}}
+
+// ===== STATE =====
+let state={
+  currentSection:'home',
+  darkMode:true,
+  completedSections:load('completedSections',[]),
+  diaryEntries:load('diaryEntries',[]),
+  reflections:load('reflections',{}),
+  checklist:load('checklist',{}),
+  moods:load('moods',[]),
+  quickTestScores:load('quickTestScores',{}),
+  profileAnswers:load('profileAnswers',{}),
+  oracleHistory:load('oracleHistory',[]),
+  challengesCompleted:load('challengesCompleted',0),
+  badges:load('badges',[]),
+  quizScore:0,
+  quizIndex:0,
+  scratchRevealed:load('scratchRevealed',[]),
+  currentChallenge:load('currentChallenge',null),
+  rouletteSpun:false,
+  gameTab:'ruleta'
+};
+
+// ===== DATA =====
+const chapters=[
+  {id:'c1',title:'No necesitas estar mal',icon:'🌸',content:`
+    <h2>No necesitas estar mal para merecer cuidado</h2>
+    <p>El autocuidado no es un premio por sufrir lo suficiente. Es un derecho básico que mereces simplemente por existir. Esperar al colapso para descansar es una forma de maltrato autoimpuesto.</p>
+    <div class="highlight-box">"Cuidarte antes de romperte no es exageración, es inteligencia emocional."</div>
+    <h3>¿Por qué es importante?</h3>
+    <p>Muchas personas esperan llegar al límite para permitirse descansar, como si el agotamiento fuera la condición necesaria para merecer cuidado. Pero el bienestar no se gana con sufrimiento.</p>
+    <h3>Pasos prácticos</h3>
+    <div class="steps-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Pregúntate cada mañana: <em>"¿Qué necesito hoy para sentirme bien?"</em></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Dedica 10 minutos diarios a hacer algo solo para ti</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Nota cuándo esperas a estar agotada para descansar</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Permítete pausas preventivas, no reactivas</div></div>
+    </div>
+    <div class="technique-box">
+      <h4>🌿 Técnica: Identificar lo que hoy te haría bien</h4>
+      <div class="steps-list">
+        <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Detente un momento:</strong> Antes de empezar tu día, siéntate en silencio durante dos minutos. Respira profundo tres veces.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Pregúntate con honestidad:</strong> "¿Qué me haría sentir cuidada hoy?" Puede ser algo pequeño: un té caliente, una siesta de 20 minutos, decir no a algo.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Escribe una cosa concreta:</strong> Anota esa necesidad en tu teléfono o en un papel. Hazla visible y específica.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Comprométete a hacerla:</strong> Agéndala como harías con cualquier compromiso importante. Tú también eres importante.</div></div>
+      </div>
+      <p>Identificar tus necesidades diarias es el primer acto de respeto hacia ti misma. No esperes a que otros adivinen lo que necesitas.</p>
+    </div>
+  `},
+  {id:'c2',title:'Cuidarte no es egoísmo',icon:'💜',content:`
+    <h2>Cuidarte no es egoísmo, es supervivencia emocional</h2>
+    <p>Muchas personas crecieron creyendo que ponerse primero es de egoístas. Aprendieron que su valor dependía de sacrificarse por otros. Eso no es amor, es agotamiento programado.</p>
+    <div class="highlight-box">"Solo puedes dar desde la plenitud, no desde el vacío. Cuidarte te permite estar presente de verdad."</div>
+    <h3>La diferencia crucial</h3>
+    <div class="two-col" style="margin:1rem 0;">
+      <div class="card"><strong style="color:#ef4444;">🚫 Egoísmo</strong><br><span style="font-size:0.9rem;color:var(--text-muted);">Tomar sin considerar a otros, ignorar sus necesidades, dañar para beneficiarse</span></div>
+      <div class="card"><strong style="color:#22c55e;">✅ Autocuidado</strong><br><span style="font-size:0.9rem;color:var(--text-muted);">Atender tus necesidades para poder estar presente, establecer límites sanos, proteger tu energía</span></div>
+    </div>
+    <p>No puedes cuidar a nadie si tú misma estás rota. El cuidado propio es la base del cuidado hacia otros.</p>
+    <h3>El descanso como forma de respeto</h3>
+    <p>Vivimos en una cultura que glorifica el cansancio y castiga el descanso. Pero el descanso no es debilidad: es restauración necesaria.</p>
+    <ul>
+      <li>Permítete siestas: 20 minutos de descanso pueden transformar tu día completo</li>
+      <li>Di no cuando estés agotada. No tienes que justificar tu cansancio</li>
+      <li>Crea rituales de desconexión: apaga notificaciones una hora antes de dormir</li>
+      <li>Respeta tu sueño: dormir 7–8 horas no es un lujo, es una necesidad básica</li>
+    </ul>
+    <div class="highlight-box">"Descansar no es rendirse. Es honrar tu humanidad y tus límites con amor."</div>
+  `},
+  {id:'c3',title:'Tu cuerpo merece cuidado',icon:'🌿',content:`
+    <h2>Tu cuerpo merece cuidado y ternura</h2>
+    <h3>Comer sin culpa, con atención</h3>
+    <p>La comida no es tu enemiga ni tu recompensa. Es el combustible que le das a tu cuerpo para vivir. Comer con culpa convierte un acto básico de supervivencia en un campo de batalla interno.</p>
+    <ul>
+      <li>Come sentada, sin pantallas, prestando atención a cada bocado</li>
+      <li>Pregúntate: "¿Tengo hambre física o emocional?"</li>
+      <li>Elige alimentos que te nutran, no que te castiguen</li>
+      <li>Permítete disfrutar sin juzgarte</li>
+      <li>Agradece a tu cuerpo por aceptar ese alimento</li>
+    </ul>
+    <h3>Bañarte como ritual de presencia</h3>
+    <p>Bañarte puede ser un acto automático o un momento sagrado de conexión contigo misma. Convertirlo en ritual de presencia transforma esos minutos en un espacio de autocuidado profundo.</p>
+    <ul>
+      <li><strong>Siente el agua:</strong> Nota la temperatura, cómo recorre tu piel, cómo relaja tus músculos</li>
+      <li><strong>Toca tu cuerpo con ternura:</strong> Hazlo con movimientos suaves, como cuidarías a alguien que amas</li>
+      <li><strong>Respira conscientemente:</strong> Inhala vapor, exhala tensión</li>
+      <li><strong>Sécate con calma:</strong> No te apures. Cierra el ritual con gratitud</li>
+    </ul>
+    <h3>Hidratarte como gesto de conexión</h3>
+    <p>Olvidar tus necesidades básicas es señal de desconexión contigo misma. Cómo convertirlo en hábito:</p>
+    <ul>
+      <li>Ten siempre una botella de agua a la vista</li>
+      <li>Bebe un vaso al despertar, antes de pantallas</li>
+      <li>Asocia el agua a momentos clave: después de cada comida, al llegar a casa</li>
+      <li>Agradece a tu cuerpo por aceptar esa nutrición</li>
+    </ul>
+    <div class="technique-box">
+      <h4>🧘 Técnica: Escaneo corporal de ternura</h4>
+      <p>Esta técnica te ayuda a reconectar con tu cuerpo desde la compasión, no desde la exigencia o la crítica.</p>
+      <div class="steps-list">
+        <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Encuentra un lugar tranquilo:</strong> Siéntate o acuéstate donde no te interrumpan durante 10 minutos.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Cierra los ojos y respira:</strong> Haz tres respiraciones profundas. Siente cómo tu cuerpo se apoya en la superficie.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Recorre tu cuerpo con atención:</strong> Desde la cabeza hasta los pies, nota cada parte sin juzgar. Solo observa: tensión, calor, dolor, comodidad.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Habla a cada parte con ternura:</strong> "Gracias, pies, por sostenerme." "Lo siento, hombros, por la tensión que cargo." Con amabilidad, sin exigencias.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Termina agradeciendo:</strong> Agradece a tu cuerpo por estar aquí, por seguir sosteniéndote a pesar de todo.</div></div>
+      </div>
+      <div class="highlight-box">"Tu cuerpo no es tu enemigo. Tratarlo con ternura es una revolución silenciosa de autocuidado."</div>
+    </div>
+  `},
+  {id:'c4',title:'Elegir ropa y entorno',icon:'👗',content:`
+    <h2>Elegir ropa que te abrace, no que te castigue</h2>
+    <p>Usar ropa incómoda todo el día es una forma de maltrato sutil. Tu cuerpo merece sentirse cómodo, respirar, moverse libremente. La ropa debe servirte a ti, no al revés.</p>
+    <ul>
+      <li><strong>Elige tejidos suaves:</strong> Algodón, lino, materiales que no irriten tu piel</li>
+      <li><strong>Prueba antes de comprar:</strong> No compres algo porque "debería" quedarte bien</li>
+      <li><strong>Libera espacio en tu armario:</strong> Dona la ropa que te hace sentir mal contigo misma</li>
+    </ul>
+    <div class="highlight-box">"Vestirte con comodidad es una forma diaria de decirle a tu cuerpo: Te respeto y te cuido."</div>
+    <h3>Crear un ambiente que te relaje</h3>
+    <p>Los espacios ruidosos, desordenados o visualmente caóticos aumentan el estrés. Tu entorno te cuida o te agota: tú decides.</p>
+    <ul>
+      <li><strong>Iluminación suave:</strong> Cambia luces blancas agresivas por luz cálida</li>
+      <li><strong>Elementos naturales:</strong> Plantas, madera, piedra. La naturaleza calma</li>
+      <li><strong>Texturas que inviten al tacto:</strong> Mantas suaves, cojines mullidos</li>
+      <li><strong>Menos es más:</strong> El minimalismo es eliminar el ruido visual que te agota</li>
+    </ul>
+    <div class="technique-box">
+      <h4>🏠 Técnica: Rincón de autocuidado</h4>
+      <p>Tener un rincón específico dedicado al autocuidado te ayuda a asociar ese espacio con calma y presencia. No necesita ser grande: puede ser una silla junto a la ventana, un cojín en el suelo.</p>
+      <div class="steps-list">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Elige un espacio tranquilo de tu casa</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">Añade elementos que te calmen: plantas, velas, mantas suaves</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">Coloca objetos significativos: fotos, libros, un diario</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">Mantén ese espacio limpio y acogedor</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-text">Úsalo solo para momentos de autocuidado consciente</div></div>
+      </div>
+    </div>
+  `},
+  {id:'c5',title:'Emociones con verdad',icon:'💙',content:`
+    <h2>Tus emociones merecen ser escuchadas</h2>
+    <h3>Validar tu cansancio sin justificarte</h3>
+    <p>Vivimos en una cultura que nos enseña a comparar nuestro cansancio: "Hay gente que está peor", "No trabajé tanto como para estar cansada". Pero el cansancio no necesita justificación.</p>
+    <ul>
+      <li>Di en voz alta: "Estoy cansada y eso está bien"</li>
+      <li>No compares tu cansancio con el de otros</li>
+      <li>Permítete descansar sin explicaciones</li>
+      <li>Rechaza la culpa cuando necesites parar</li>
+    </ul>
+    <h3>Llorar sin sentirte débil</h3>
+    <p>Llorar no es debilidad. Es una respuesta fisiológica sana ante el dolor, la frustración, la tristeza o incluso el alivio. La verdadera fortaleza incluye permitirte sentir sin vergüenza.</p>
+    <ul>
+      <li><strong>Encuentra un espacio seguro:</strong> Un lugar donde puedas llorar sin interrupciones</li>
+      <li><strong>Deja que salga sin contenerlo:</strong> Las lágrimas limpian, no debilitan</li>
+      <li><strong>Respira y acompáñate después:</strong> Sé gentil contigo</li>
+    </ul>
+    <div class="highlight-box">"Llorar es un acto de valentía. Es permitirte sentir en un mundo que te pide constantemente anestesiarte."</div>
+    <h3>Nombrar lo que sientes con verdad</h3>
+    <p>No nombrar lo que sientes no hace que desaparezca. Solo lo entierra más profundo.</p>
+    <ul>
+      <li><strong>Usa palabras específicas:</strong> En lugar de "mal", di "ansiosa", "frustrada", "abrumada"</li>
+      <li><strong>Di la verdad, aunque sea incómoda:</strong> "Estoy asustada", "Me siento sola"</li>
+      <li><strong>Valida tu experiencia:</strong> "Tiene sentido que me sienta así"</li>
+    </ul>
+    <div class="technique-box">
+      <h4>💭 Técnica: Espacio emocional diario</h4>
+      <p>Darle espacio a tus emociones cada día evita que se acumulen hasta explotar.</p>
+      <div class="steps-list">
+        <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Elige un momento fijo:</strong> 10 minutos al día, siempre a la misma hora. Antes de dormir funciona bien.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Pregúntate: ¿Qué sentí hoy?</strong> Escribe sin filtro. No necesita ser bonito ni coherente. Solo honesto.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Valida lo que aparezca:</strong> Todas las emociones son válidas. No juzgues lo que sientes, solo obsérvalo.</div></div>
+      </div>
+      <p>Si no sabes qué sientes, empieza describiendo tu día. Las emociones aparecerán solas cuando les des espacio.</p>
+    </div>
+  `},
+  {id:'c6',title:'Límites y rutinas',icon:'🌺',content:`
+    <h2>Respetar tus límites y crear rutinas propias</h2>
+    <h3>Respetar tus límites internos</h3>
+    <p>No solo necesitas límites con otras personas. También necesitas límites contigo misma: saber cuándo parar, cuándo pedir ayuda, cuándo decir "no puedo más".</p>
+    <ul>
+      <li>Nota cuando tu cuerpo pide pausa: dolor de cabeza, tensión, agotamiento</li>
+      <li>Escucha tu mente cuando dice "no puedo más"</li>
+      <li>No ignores señales de saturación emocional</li>
+      <li>Pregúntate: "¿Qué pasaría si me detengo ahora?"</li>
+    </ul>
+    <h3>Crear una rutina solo para ti</h3>
+    <p>Tener una rutina que es solo tuya —sin incluir trabajo, familia, obligaciones— te recuerda que existes más allá de tus roles.</p>
+    <div class="steps-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text">6:30 AM — Despertar 20 min antes que todos</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">6:35 AM — Café en silencio, mirando por la ventana</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">6:45 AM — Escribir 3 pensamientos en diario</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">6:50 AM — 5 minutos de respiración consciente</div></div>
+    </div>
+    <div class="highlight-box">"Tu rutina personal es territorio sagrado donde te reconectas contigo misma. Protégela ferozmente."</div>
+    <h3>Técnica: Agendar tu autocuidado</h3>
+    <p>Si no lo agendas, no pasa. El autocuidado merece estar en tu calendario tanto como cualquier reunión de trabajo.</p>
+    <div class="steps-list">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Lunes — 30 min de lectura antes de dormir</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Miércoles — Caminar 20 min en silencio</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Viernes — Baño relajante con música suave</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Domingo — Desayuno lento, sin prisa</div></div>
+    </div>
+  `},
+  {id:'c7',title:'Relaciones y vínculos',icon:'🤝',content:`
+    <h2>Relaciones que nutren tu alma</h2>
+    <h3>Evitar personas que invalidan tus emociones</h3>
+    <p>Hay personas que minimizan lo que sientes. Eso no es apoyo: es invalidación. Mereces rodearte de personas que validen tu experiencia.</p>
+    <div class="two-col" style="margin:1rem 0;">
+      <div class="card"><strong style="color:#ef4444;">❌ Invalidan</strong><br><span style="font-size:0.85rem;color:var(--text-muted);">"No deberías sentirte así", "Ya supéralo", "Siempre dramatizas", "Eres demasiado sensible"</span></div>
+      <div class="card"><strong style="color:#22c55e;">✅ Validan</strong><br><span style="font-size:0.85rem;color:var(--text-muted);">"Tiene sentido que te sientas así", "Te escucho", "Tu dolor es real", "Estoy aquí contigo"</span></div>
+    </div>
+    <h3>Elegir relaciones que te nutran</h3>
+    <p>Una relación nutritiva te deja mejor que antes: más ligera, más vista, más tú. Una relación agotadora te deja vacía, ansiosa, cuestionándote tu valor.</p>
+    <ul>
+      <li>Limita el contacto con personas que invalidan constantemente</li>
+      <li>Busca validación en ti: tu verdad no necesita aprobación externa</li>
+      <li>Reconoce cuando una relación te drena más de lo que te nutre</li>
+    </ul>
+    <h3>No sobreexigirte para que te quieran</h3>
+    <p>El amor que necesitas demostrar con agotamiento no es amor: es transacción. Mereces ser amada por quien eres.</p>
+    <ul>
+      <li>Señal de alerta: dices sí a todo para no decepcionar</li>
+      <li>Señal de alerta: te sientes invisible si no estás haciendo algo por otros</li>
+      <li>Señal de alerta: temes que si paras, te abandonarán</li>
+    </ul>
+    <div class="highlight-box">"No tienes que agotarte para merecer amor. Mereces amor simplemente por existir, incluso cuando descansas."</div>
+  `},
+  {id:'c8',title:'Acompañarte sin exigirte',icon:'🌻',content:`
+    <h2>Acompañarte sin exigirte cambiar</h2>
+    <p>Cuando te sientes mal, tu mente puede bombardearte con exigencias: "Deberías estar mejor", "Ya deberías superarlo". Pero esas exigencias solo añaden más dolor.</p>
+    <ul>
+      <li><strong>Reconoce dónde estás:</strong> "Hoy me siento así. Y está bien estar aquí por ahora."</li>
+      <li><strong>Suelta la urgencia de cambiar:</strong> A veces solo necesitas tiempo y compañía</li>
+      <li><strong>Háblate como a un amigo:</strong> "Sé que es difícil. Estoy aquí contigo"</li>
+      <li><strong>Permite el proceso:</strong> Sanar no es lineal. Habrá días buenos y días malos. Ambos son válidos</li>
+    </ul>
+    <div class="highlight-box">"Acompañarte sin exigencias es una de las formas más profundas de autocuidado."</div>
+    <h3>Celebrar tus logros sin minimizarlos</h3>
+    <p>Muchas personas minimizan sus logros: "No fue tan difícil", "Cualquiera lo habría hecho". Pero restarle valor a lo que consigues es una forma de maltrato sutil.</p>
+    <h3>Agradecer a tu cuerpo por sostenerte</h3>
+    <p>Tu cuerpo hace milagros cada segundo: late, respira, sana, siente, te mantiene viva.</p>
+    <ul>
+      <li><strong>Tu corazón late sin descanso:</strong> Miles de veces al día, sin que tengas que pensarlo</li>
+      <li><strong>Tus pulmones te dan oxígeno:</strong> Cada respiración es un regalo automático</li>
+      <li><strong>Tus pies te llevan a donde quieres ir:</strong> Aunque los ignores, siguen sosteniéndote</li>
+    </ul>
+    <div class="highlight-box">"Tu cuerpo merece gratitud, no castigo. Tratarlo con respeto es la base del autocuidado real."</div>
+  `}
+];
+
+const concepts=[
+  {title:'El autocuidado preventivo',text:'No esperes al colapso. El autocuidado preventivo significa crear espacios de bienestar ANTES de necesitarlos urgentemente. Es la diferencia entre llenar el tanque de gasolina antes de que se vacíe, no después de quedar varada en la carretera.'},
+  {title:'Pausas reactivas vs preventivas',text:'Una pausa reactiva ocurre cuando ya estás en crisis. Una pausa preventiva es la inteligencia emocional en acción: descansas antes de agotarte, dices no antes de llenarte, pides ayuda antes de hundirte.'},
+  {title:'La diferencia entre autocuidado y egoísmo',text:'El egoísmo toma sin considerar a otros. El autocuidado atende tus necesidades para poder estar presente de verdad. No puedes dar desde el vacío. Cuidarte es la base para cuidar a quienes amas.'},
+  {title:'Límites internos',text:'No solo existen los límites con otros. Los límites internos son señales que tu cuerpo y mente envían: cuándo parar, cuándo pedir ayuda, cuándo decir "no puedo más". Ignorarlos es una forma de maltrato hacia ti misma.'},
+  {title:'La validación propia',text:'Tu experiencia emocional es válida aunque nadie más la reconozca. No necesitas el permiso de otros para sentir lo que sientes. El primer y más importante validador de tu experiencia eres tú misma.'},
+  {title:'El descanso como acto de compasión',text:'Privarte de sueño no es productividad: es violencia contra tu propio sistema nervioso. Dormir bien es una necesidad biológica sin la cual todo se desmorona: salud mental, inmunidad, claridad, estado de ánimo.'},
+  {title:'Tu atención es tu recurso más valioso',text:'En un mundo diseñado para robarte la atención constantemente, elegir a qué se la das es un acto revolucionario de autocuidado. La atención es finita. Úsala con intención en lo que te nutre.'},
+  {title:'El amor propio no se demuestra con agotamiento',text:'El amor que necesitas demostrar con agotamiento no es amor: es transacción. Mereces ser amada por quien eres, no por cuánto te sacrificas. Tu valor existe más allá de tu rendimiento.'},
+  {title:'Nombrar las emociones con precisión',text:'Decir simplemente "estoy mal" no te ayuda a entender qué necesitas. La precisión emocional —"estoy ansiosa", "me siento sola", "estoy frustrada"— es el primer paso para poder cuidarte de verdad.'},
+  {title:'Sanar no es lineal',text:'Habrá días buenos y días malos. Ambos son válidos. No te exijas una recuperación perfecta ni constante. Acompañarte sin exigencias es una de las formas más profundas de autocuidado que existen.'}
+];
+
+const reflectionQs=[
+  {id:'r1',q:'¿En qué momentos de esta semana me cuidé bien? ¿Qué hice que me hizo sentir bien conmigo misma?'},
+  {id:'r2',q:'¿Cuándo fue la última vez que descansé sin sentirme culpable? ¿Cómo me sentí?'},
+  {id:'r3',q:'¿Qué necesidad mía he estado ignorando últimamente? ¿Por qué la he estado ignorando?'},
+  {id:'r4',q:'¿Hay alguna persona en mi vida que invalida mis emociones? ¿Cómo me afecta eso?'},
+  {id:'r5',q:'¿Qué le diría a mi mejor amiga si estuviera pasando por lo que estoy pasando yo?'},
+  {id:'r6',q:'¿En qué áreas de mi vida me exijo demasiado? ¿De dónde viene esa exigencia?'},
+  {id:'r7',q:'¿Qué parte de mi cuerpo merece más gratitud hoy? ¿Qué le diría?'},
+  {id:'r8',q:'¿Qué significaría para mí tratarme como trato a las personas que más amo?'},
+  {id:'r9',q:'¿Cuándo fue la última vez que lloré? ¿Pude permitirme ese llanto sin juzgarlo?'},
+  {id:'r10',q:'Si pudiera hacer un pequeño gesto de autocuidado ahora mismo, ¿cuál sería?'}
+];
+
+const moodData={
+  agotada:{
+    emoji:'😴',
+    tips:['Toma una siesta de 20 minutos sin culpa.','Di "no" a cualquier pedido no urgente hoy.','Prepara algo cálido para tomar: té, caldo, chocolate.','Pon música suave y descansa aunque sea 10 minutos.','Recuerda: tu valor no depende de lo que produces.']
+  },
+  triste:{
+    emoji:'😔',
+    tips:['Date permiso de sentir la tristeza sin apurarla.','Escribe tres cosas que sientas en este momento, sin juzgar.','Llama a alguien de confianza, o simplemente abrázate.','Pon música que acompañe tu estado de ánimo, no que lo niegue.','Recuerda: las emociones son visitantes, no residentes permanentes.']
+  },
+  frustrada:{
+    emoji:'😡',
+    tips:['Mueve tu cuerpo: camina, sacude los brazos, respira fuerte.','Escribe sin filtro todo lo que sientes. No lo mandes a nadie.','Busca qué necesidad no está siendo atendida detrás de la frustración.','Aléjate de la situación 10 minutos antes de actuar.','Recuerda: tus límites son válidos y merece respetarlos.']
+  },
+  ansiosa:{
+    emoji:'😰',
+    tips:['Haz 10 respiraciones lentas: inhala 4 tiempos, exhala 6.','Reduce el ruido digital durante una hora.','Camina 10 minutos al aire libre o junto a una ventana.','Escribe qué te genera ansiedad concretamente. La claridad calma.','Recuerda: no todo necesita resolverse hoy.']
+  },
+  feliz:{
+    emoji:'😊',
+    tips:['Celebra este momento contigo misma. Mereces sentirte bien.','Anota qué contribuyó a este estado para recrearlo.','Comparte tu alegría con alguien que la sepa recibir.','Haz algo creativo: escribe, pinta, cocina algo que ames.','Recuerda: la felicidad también es un estado válido de ser.']
+  }
+};
+
+const quickTestQs=[
+  '¿Escuché mis necesidades?',
+  '¿Respeté mis límites?',
+  '¿Descansé cuando lo necesité?',
+  '¿Me hablé con amor?',
+  '¿Hice algo por mí?'
+];
+
+const profileQs=[
+  {q:'Cuando alguien me pide un favor y no puedo, yo...', opts:['Digo que sí aunque no quiera para no decepcionar','Busco una manera de ayudar aunque me cueste','Digo que no con amabilidad y explico mis razones','Digo que no sin sentir la necesidad de explicarme']},
+  {q:'Cuando estoy agotada, generalmente...', opts:['Sigo adelante hasta caer','Trato de descansar pero me siento culpable','Descanso, aunque a veces cuesta','Respeto mi cansancio sin cuestionarlo']},
+  {q:'¿Con qué frecuencia haces algo solo para ti?', opts:['Casi nunca, siempre hay algo más urgente','A veces, cuando "me lo permito"','Varias veces a la semana','Es parte de mi rutina diaria']},
+  {q:'Cuando alguien invalida mis emociones, yo...', opts:['Cedo y creo que tienen razón','Me confundo y no sé qué sentir','Me molesta pero no digo nada','Confío en mi experiencia y la defiendo amablemente']},
+  {q:'¿Cómo te hablas a ti misma cuando cometes un error?', opts:['Con mucha dureza y autocrítica','Con cierta exigencia pero trato de mejorar','Con comprensión aunque cuesta','Con la misma amabilidad que le hablaría a una amiga']}
+];
+
+const profileResults=[
+  {icon:'🌱',name:'Empezando el camino',desc:'Estás en el inicio de tu relación de autocuidado. Es normal comenzar desde aquí. Lo importante es que tomaste conciencia. Cada pequeño gesto de amor propio que des a partir de hoy construirá una nueva relación contigo misma. Empieza con algo pequeño y observable.'},
+  {icon:'🌷',name:'Construyendo la base',desc:'Ya tienes awareness y algunos hábitos de autocuidado, pero todavía cargas con creencias que te hacen sentir que no "mereces" descansar o que cuidarte es egoísta. El siguiente paso es desafiar esas creencias una por una, con paciencia y compasión.'},
+  {icon:'🌿',name:'Creciendo con consciencia',desc:'Tienes una relación bastante sana contigo misma. Sabes lo que necesitas y generalmente te lo das. Los momentos difíciles siguen siendo un reto, pero los atraviesas con cada vez más recursos. Sigue cultivando esa conexión contigo.'},
+  {icon:'🌳',name:'Florecer desde adentro',desc:'Has construido una relación profunda y amorosa contigo misma. Tus límites son claros, tu autocompasión es real y tu autocuidado es una prioridad innegociable. Eres un ejemplo de lo que se puede cultivar con práctica y conciencia. Celebra dónde estás.'}
+];
+
+const oracleMessages=[
+  "Mereces el mismo amor que das tan generosamente a los demás.",
+  "El descanso no es rendirse. Es prepararse para seguir.",
+  "Tu cansancio es real. No necesitas justificarlo.",
+  "Eres suficiente exactamente como eres en este momento.",
+  "Decir no también es un acto de amor propio.",
+  "Tu cuerpo hace milagros cada segundo. Agradécele.",
+  "No tienes que ganarte el derecho a existir.",
+  "Está bien no estar bien. Está bien pedir ayuda.",
+  "La compasión que le das al mundo empieza por dártela a ti.",
+  "Eres humana. Y lo humano incluye necesitar, descansar, sentir.",
+  "Tus límites son sagrados. Protégelos sin disculpas.",
+  "Hoy, que un gesto de amor sea solo para ti.",
+  "No necesitas estar perfecta para merecer cuidado.",
+  "Llorar es limpiar el alma. Permítete ese regalo.",
+  "Tu valor existe independientemente de lo que produces.",
+  "Mereces relaciones que te hagan sentir vista y escuchada.",
+  "El autocuidado más profundo es tratarte como tratas a quienes amas.",
+  "Tus necesidades importan tanto como las de cualquier otra persona.",
+  "Sanar no es lineal. Hay días buenos y días difíciles. Ambos son válidos.",
+  "Tienes derecho a cambiar de opinión, de planes, de camino.",
+  "No todo necesita ser arreglado inmediatamente. A veces solo necesitas tiempo.",
+  "Tu intuición te cuida. Aprende a escucharla.",
+  "El amor propio no es arrogancia. Es la base de todo lo demás.",
+  "Mereces descansar sin sentirte culpable por ello.",
+  "Tu cuerpo no es tu enemigo. Es tu hogar.",
+  "No tienes que ser productiva para tener valor.",
+  "Pedir ayuda es fortaleza, no debilidad.",
+  "Tus emociones son mensajeras, no enemigas.",
+  "Hoy permítete ser antes de hacer.",
+  "Eres digna de todo el amor que eres capaz de dar.",
+  "El silencio también puede ser un abrazo.",
+  "No compitas con tu propio dolor. Es tuyo y es real.",
+  "Respeta tus límites: son el mapa de lo que te hace bien.",
+  "La ternura que te das a ti misma transforma cómo te tratan los demás.",
+  "No tienes que justificar tu existencia ante nadie.",
+  "Hoy puedes descansar. Mañana también podrás.",
+  "Tu historia merece ser contada con amabilidad, especialmente por ti.",
+  "Cada respiración es una oportunidad de volver a ti.",
+  "No estás sola en esto. Muchas corazones sienten lo que tú sientes.",
+  "Mereces que te escuchen. Empieza por escucharte tú.",
+  "Tu bienestar no es un lujo. Es una necesidad.",
+  "Hay valentía en la vulnerabilidad. Hay amor en el descanso.",
+  "Hoy cuídate como si fueras la persona que más amas en el mundo.",
+  "Tus heridas no son tu identidad. Eres mucho más que ellas.",
+  "Está bien no tener todo resuelto. Estás en proceso.",
+  "Tu presencia en este mundo ya es suficiente regalo.",
+  "Acompáñate con la misma paciencia que le darías a un niño aprendiendo.",
+  "El amor propio es una práctica diaria, no un destino.",
+  "Hoy, una cosa pequeña solo para ti. Eso también es revolución.",
+  "No tienes que ganar el descanso. Ya lo mereces.",
+  "Tu corazón late por ti cada segundo. Cuídalo.",
+  "Los días difíciles también tienen su enseñanza. Confía en el proceso.",
+  "Eres más resiliente de lo que crees. Ya lo has demostrado.",
+  "Tu manera de ver el mundo es única. No la minimices.",
+  "Mereces ocupar espacio. En el mundo, en las conversaciones, en los sueños.",
+  "No te pidas más de lo que le pedirías a alguien que amas en su peor día.",
+  "Celebra lo pequeño. Los grandes cambios nacen de actos cotidianos.",
+  "Tu cuerpo lleva cargando más de lo que reconoces. Agradécele.",
+  "Decir 'necesito ayuda' es uno de los actos más valientes.",
+  "No todo el amor viene de afuera. El más importante nace dentro.",
+  "Hoy date un momento de presencia plena contigo misma.",
+  "Tu ritmo no tiene que coincidir con el de nadie más.",
+  "Las personas que te quieren de verdad no necesitan que te sacrifiques.",
+  "Tú también eres alguien que merece ser cuidada.",
+  "Cuando cuidas tu energía, cuidas tu vida entera.",
+  "Permítete recibir. No solo dar.",
+  "Tu sensibilidad es una fortaleza disfrazada.",
+  "No tienes que resolver todo hoy. Respira.",
+  "Hoy basta con estar. No tienes que hacer nada más.",
+  "La paz que buscas afuera empieza por encontrarla adentro.",
+  "Tu cuerpo sabe más de lo que tu mente reconoce.",
+  "No mereces amor a pesar de ser humana. Lo mereces por serlo.",
+  "Ser vulnerable con las personas correctas es seguridad, no riesgo.",
+  "Tus cicatrices son prueba de que lo superaste. Honra ese camino.",
+  "Hoy hazle espacio a lo que te nutre.",
+  "Mereces una conversación interna llena de amor y compasión.",
+  "El autocuidado que practicas hoy es la base de quien serás mañana.",
+  "Tú eres la persona con quien estarás toda la vida. Cuida esa relación.",
+  "No tienes que ser perfecta para merecer amor. Solo humana.",
+  "Hay belleza en tu imperfección. Hay fuerza en tu vulnerabilidad.",
+  "Cada vez que te cuidas, le enseñas al mundo cómo tratarte.",
+  "Hoy date la misma gracia que le darías a alguien que amas.",
+  "Tus necesidades no son una carga. Son información valiosa.",
+  "Mereces noches de sueño reparador y mañanas tranquilas.",
+  "El amor que te niegas a ti misma es el que más falta.",
+  "No estás sola. Hay muchos corazones aprendiendo lo mismo que tú.",
+  "Tu presencia es suficiente. No tienes que hacer nada para merecerla.",
+  "Hoy, un gesto pequeño de amor hacia ti puede cambiarlo todo.",
+  "Cuídate con la misma devoción que cuidas todo lo demás.",
+  "Mereces días lentos, mañanas tranquilas, noches en paz.",
+  "Tu camino de autocuidado empieza exactamente donde estás.",
+  "No tienes que esperar a sentirte mejor para empezar a cuidarte.",
+  "Eres digna de tu propia compasión.",
+  "Hoy, regálate la presencia que tanto le das a los demás.",
+  "Tu bienestar no es negociable. Ponlo primero, sin culpa.",
+  "Eres exactamente donde necesitas estar en este momento.",
+  "Cada acto de autocuidado es una declaración: merezco estar bien.",
+  "No tengas prisa. El amor propio se cultiva con paciencia.",
+  "Hoy y siempre: mereces ser tratada con amor. Empieza por ti."
+];
+
+const challenges=[
+  {emoji:'🌿',text:'Prepara una infusión caliente y tómatela en silencio, sin pantallas, solo prestando atención a cada sorbo.',sub:'Duración: 10 minutos'},
+  {emoji:'🚶',text:'Sal a caminar 15 minutos sin teléfono ni destino fijo. Solo tú, tu respiración y el entorno.',sub:'Duración: 15 minutos'},
+  {emoji:'📝',text:'Escribe tres cosas que hiciste bien esta semana. Sin minimizar ninguna. Celebra cada una.',sub:'Duración: 5 minutos'},
+  {emoji:'🛁',text:'Convierte tu ducha de hoy en un ritual consciente. Siente el agua, respira el vapor, muévete con ternura.',sub:'Duración: variable'},
+  {emoji:'📵',text:'Apaga las notificaciones por 2 horas. Observa cómo cambia tu nivel de ansiedad y claridad mental.',sub:'Duración: 2 horas'},
+  {emoji:'💌',text:'Escríbete una carta de amor. Cuéntate lo que ves en ti que merece ser amado. Sé generosa.',sub:'Duración: 15 minutos'},
+  {emoji:'🧘',text:'Practica el escaneo corporal de ternura: 10 minutos recorriendo tu cuerpo con gratitud y amabilidad.',sub:'Duración: 10 minutos'},
+  {emoji:'🌺',text:'Di "no" a algo que normalmente aceptarías por culpa o por no decepcionar. Sin justificaciones.',sub:'Desafío de un día'},
+  {emoji:'😴',text:'Acuéstate 30 minutos antes de lo habitual. Regálate ese tiempo extra de descanso sin culpa.',sub:'Esta noche'},
+  {emoji:'🌸',text:'Llama o escribe a alguien que te haga sentir vista y escuchada. Conéctate de corazón.',sub:'Hoy'},
+  {emoji:'🏡',text:'Ordena un espacio pequeño: tu mesita de noche, tu escritorio. Crea un lugar que te acoja.',sub:'Duración: 20 minutos'},
+  {emoji:'🎵',text:'Crea una playlist de canciones que te hagan sentir bien y escúchala mientras haces algo que ames.',sub:'Duración: variable'},
+  {emoji:'🌙',text:'Esta noche, apaga las pantallas 60 minutos antes de dormir. Crea un ritual de desconexión.',sub:'Esta noche'},
+  {emoji:'💧',text:'Bebe 8 vasos de agua hoy. Cada vez que bebas, di: "Me cuido por dentro."',sub:'Todo el día'},
+  {emoji:'🤗',text:'Identifica una exigencia que te estás poniendo y reemplázala por una frase compasiva.',sub:'Hoy'},
+  {emoji:'🌻',text:'Haz UNA cosa que hayas estado postergando porque "no es el momento". El momento es ahora.',sub:'Hoy'},
+  {emoji:'💆',text:'Date un automasaje en manos o cuello por 5 minutos. Con aceite, crema o solo tus manos.',sub:'Duración: 5 minutos'},
+  {emoji:'🍵',text:'Cocina algo rico solo para ti, con cariño y sin prisa. Comer contigo misma también es autocuidado.',sub:'Hoy'},
+  {emoji:'📖',text:'Lee 20 minutos de algo que te nutra y te haga sentir bien. No noticias. No trabajo.',sub:'Duración: 20 minutos'},
+  {emoji:'🌅',text:'Mañana levántate 20 minutos antes. Usa ese tiempo solo para ti, en silencio y calma.',sub:'Mañana por la mañana'}
+];
+
+const awarenessQs=[
+  '¿Cuándo fue la última vez que te pusiste primera sin culpa?',
+  '¿Qué parte de ti estás ignorando para complacer a otros?',
+  '¿Cuál es la creencia más dañina que tienes sobre merecer cuidado?',
+  '¿Si te trataras como tratas a tu mejor amiga, qué cambiaría hoy?',
+  '¿Cuándo aprendiste que descansar era "de flojas"? ¿Quién te lo enseñó?',
+  '¿Qué parte de ti lleva cargando algo en silencio que merecería más espacio?',
+  '¿Cuándo fue la última vez que lloraste sin tratar de parar?',
+  '¿Hay alguna relación en tu vida que te cuesta más de lo que te da?',
+  '¿Qué necesitas hoy que aún no te has permitido pedir ni darte?',
+  '¿Si tu cuerpo pudiera hablarte ahora mismo, qué te diría?',
+  '¿En qué momentos del día estás más desconectada de ti misma?',
+  '¿Qué harías diferente si supieras que mereces amor tal como eres?',
+  '¿Hay algo que sigues haciendo "para que te quieran" que ya no quieres hacer?',
+  '¿Cuándo fue la última vez que celebraste algo tuyo sin minimizarlo?',
+  '¿Qué límite necesitas establecer (contigo o con alguien) que has estado evitando?'
+];
+
+const quizQs=[
+  {q:'¿Qué es el autocuidado preventivo?',opts:['Descansar solo cuando ya estás agotada','Crear espacios de bienestar antes de necesitarlos urgentemente','Tomar medicamentos antes de enfermarte','Ir al médico regularmente'],correct:1},
+  {q:'¿Cuál es la diferencia principal entre egoísmo y autocuidado?',opts:['No hay diferencia, son lo mismo','El autocuidado es solo para personas sanas','El egoísmo toma sin considerar a otros; el autocuidado atiende tus necesidades para poder estar presente','El egoísmo es malo y el autocuidado es bueno'],correct:2},
+  {q:'Según el libro, ¿qué es privarte de sueño?',opts:['Una estrategia de productividad válida','Violencia contra tu propio sistema nervioso','Algo que solo afecta a personas mayores','Necesario a veces para cumplir metas'],correct:1},
+  {q:'¿Qué significa "acompañarte sin exigirte cambiar"?',opts:['Resignarte y no intentar mejorar','Estar contigo en lo que sea que estés sintiendo, sin presionarte a estar "bien" antes de tiempo','Ignorar tus problemas','Solo aplica cuando estás de buen humor'],correct:1},
+  {q:'¿Por qué es importante nombrar tus emociones con precisión?',opts:['Solo para impresionar a otros','No importa, todas las emociones son iguales','La precisión emocional ayuda a entender qué necesitas y poder cuidarte de verdad','Para poder controlarlas y eliminarlas'],correct:2},
+  {q:'¿Qué son los límites internos?',opts:['Reglas que otros nos ponen','Saber cuándo parar, cuándo pedir ayuda, cuándo decir "no puedo más"','Solo aplica en el trabajo','Los muros que construimos para protegernos'],correct:1},
+  {q:'¿Qué demuestra pedir ayuda, según el libro?',opts:['Debilidad y dependencia','Fortaleza, no debilidad','Que no puedes sola','Que tienes problemas graves'],correct:1},
+  {q:'¿Qué hace el llorar, según el contenido?',opts:['Muestra que eres débil','Solo empeora las cosas','Limpia y libera, es una respuesta fisiológica sana','Es señal de que necesitas ayuda profesional urgente'],correct:2}
+];
+
+const checklistItems=[
+  '🌙 Dormí 7-8 horas',
+  '💧 Tomé suficiente agua',
+  '🍽️ Comí con atención y sin culpa',
+  '🚶 Me moví (caminé, ejercité, estiré)',
+  '📵 Tuve tiempo sin pantallas',
+  '✍️ Escribí en mi diario',
+  '😴 Me permití una pausa o descanso',
+  '💬 Me hablé con amabilidad',
+  '🌸 Hice algo solo para mí',
+  '🙏 Agradecí algo de mi cuerpo',
+  '🚫 Respeté algún límite mío',
+  '💌 Conecté con alguien que me nutre'
+];
+
+const badgesData=[
+  {id:'b1',icon:'🌸',name:'Primera entrada',desc:'Escribiste en tu diario',condition:'diary1'},
+  {id:'b2',icon:'💫',name:'Registro emocional',desc:'Registraste tu emoción del día',condition:'mood1'},
+  {id:'b3',icon:'🔮',name:'Primera carta',desc:'Revelaste tu primera carta oráculo',condition:'oracle1'},
+  {id:'b4',icon:'🎡',name:'Rueda girada',desc:'Giraste la ruleta',condition:'roulette1'},
+  {id:'b5',icon:'✅',name:'Hábito completado',desc:'Marcaste tu primer hábito',condition:'check1'},
+  {id:'b6',icon:'🧘',name:'Reflexión profunda',desc:'Respondiste una pregunta de reflexión',condition:'reflect1'},
+  {id:'b7',icon:'🎯',name:'Desafío cumplido',desc:'Completaste tu primer desafío',condition:'challenge1'},
+  {id:'b8',icon:'📖',name:'Lectora dedicada',desc:'Leíste 3 capítulos',condition:'chapters3'},
+  {id:'b9',icon:'🏆',name:'Test completado',desc:'Completaste el test de perfil',condition:'profile1'},
+  {id:'b10',icon:'🌟',name:'Comprometida',desc:'10 hábitos completados en total',condition:'checks10'},
+  {id:'b11',icon:'💖',name:'Amor en acción',desc:'5 desafíos completados',condition:'challenges5'},
+  {id:'b12',icon:'🌺',name:'Constancia',desc:'Registraste tu emoción 5 días',condition:'moods5'}
+];
+
+// ===== INIT =====
+function init(){
+  buildChapters();
+  buildConcepts();
+  buildReflections();
+  buildQuickTest();
+  buildProfileTest();
+  buildChecklist();
+  buildBadges();
+  buildAwareness();
+  initScratch();
+  initQuiz();
+  initRoulette();
+  loadDiary();
+  loadOracleHistory();
+  loadMoodHistory();
+  updateProgress();
+  if(state.currentChallenge)renderChallenge(state.currentChallenge);
+  else newChallenge();
+  renderChallengeCount();
+  const theme=load('darkMode',true);
+  if(!theme){document.body.classList.add('light-mode');state.darkMode=false;document.getElementById('theme-btn').textContent='☀️';}
+  window.addEventListener('scroll',()=>{
+    const st=document.getElementById('scroll-top');
+    if(window.scrollY>300)st.classList.add('show');else st.classList.remove('show');
+  },{passive:true});
+}
+
+// ===== NAVIGATION =====
+function enterApp(){
+  document.getElementById('welcome').classList.remove('active');
+  document.getElementById('main').classList.add('active');
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('main').style.display='flex';
+}
+function showSection(sec){
+  state.currentSection=sec;
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.bottom-nav-item').forEach(n=>n.classList.remove('active'));
+  const panel=document.getElementById('panel-'+sec);
+  if(panel)panel.classList.add('active');
+  document.querySelectorAll(`[data-section="${sec}"]`).forEach(n=>n.classList.add('active'));
+  const titles={home:'Inicio',chapters:'Capítulos',concepts:'Conceptos Clave',reflection:'Reflexiones',mood:'¿Cómo estoy?',quicktest:'Test Rápido',profile:'Mi Perfil',games:'Juegos',oracle:'Oráculo',challenges:'Desafíos',awareness:'Despertar',diary:'Mi Diario',checklist:'Hábitos',badges:'Logros'};
+  document.getElementById('section-title').textContent=titles[sec]||sec;
+  closeSidebar();
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(!state.completedSections.includes(sec)){state.completedSections.push(sec);store('completedSections',state.completedSections);updateProgress();}
+}
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebar-overlay').classList.toggle('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+function toggleTheme(){
+  state.darkMode=!state.darkMode;
+  document.body.classList.toggle('light-mode');
+  document.getElementById('theme-btn').textContent=state.darkMode?'🌙':'☀️';
+  store('darkMode',state.darkMode);
+}
+function showTab(group,tab){
+  document.querySelectorAll(`#panel-${group} .tab-content`).forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll(`#panel-${group} .tab-btn`).forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById(`${group}-tab-${tab}`);
+  if(el)el.classList.add('active');
+  event.target.classList.add('active');
+}
+function updateProgress(){
+  const total=14;
+  const done=state.completedSections.length;
+  const pct=Math.min(100,Math.round((done/total)*100));
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-pct').textContent=pct+'%';
+}
+
+// ===== CHAPTERS =====
+function buildChapters(){
+  const nav=document.getElementById('chap-nav');
+  const cont=document.getElementById('chap-contents');
+  nav.innerHTML='';cont.innerHTML='';
+  chapters.forEach((c,i)=>{
+    const btn=document.createElement('button');
+    btn.className='chap-btn'+(i===0?' active':'');
+    btn.textContent=c.icon+' '+c.title;
+    btn.onclick=()=>selectChapter(i);
+    nav.appendChild(btn);
+    const div=document.createElement('div');
+    div.className='chapter-content card'+(i===0?' active':'');
+    div.id='chap-'+i;
+    div.innerHTML=c.content;
+    cont.appendChild(div);
+  });
+}
+function selectChapter(idx){
+  document.querySelectorAll('.chap-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  document.querySelectorAll('.chapter-content').forEach((c,i)=>c.classList.toggle('active',i===idx));
+  if(!state.completedSections.includes('chap'+idx)){
+    state.completedSections.push('chap'+idx);
+    store('completedSections',state.completedSections);
+  }
+  if(idx>=2&&!state.badges.includes('chapters3')){awardBadge('chapters3');}
+}
+
+// ===== CONCEPTS =====
+function buildConcepts(){
+  const list=document.getElementById('concepts-list');
+  list.innerHTML='';
+  concepts.forEach((c,i)=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`<div class="card-title" onclick="toggleCard(this)"><span>${c.title}</span><span class="toggle-icon">▼</span></div><div class="card-body">${c.text}</div>`;
+    list.appendChild(card);
+  });
+}
+function toggleCard(titleEl){
+  const body=titleEl.nextElementSibling;
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  titleEl.classList.toggle('open',!isOpen);
+}
+
+// ===== REFLECTIONS =====
+function buildReflections(){
+  const list=document.getElementById('reflections-list');
+  list.innerHTML='';
+  reflectionQs.forEach(q=>{
+    const saved=state.reflections[q.id]||'';
+    const div=document.createElement('div');
+    div.className='card';
+    div.innerHTML=`<div class="reflection-label">💭 ${q.q}</div><textarea class="reflection-input" id="ri-${q.id}" placeholder="Escribe tu respuesta aquí...">${saved}</textarea><button class="save-note-btn" onclick="saveReflection('${q.id}')">💾 Guardar</button>`;
+    list.appendChild(div);
+  });
+}
+function saveReflection(id){
+  const val=document.getElementById('ri-'+id).value;
+  state.reflections[id]=val;
+  store('reflections',state.reflections);
+  showToast('✨ Reflexión guardada');
+  if(!state.badges.includes('reflect1'))awardBadge('reflect1');
+}
+
+// ===== MOOD =====
+function selectMood(mood){
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('mood-'+mood).classList.add('selected');
+  const data=moodData[mood];
+  const res=document.getElementById('mood-result');
+  res.classList.add('show');
+  res.innerHTML=`<h3>${data.emoji} Cómo cuidarte si te sientes ${mood}</h3><ul>${data.tips.map(t=>`<li>👉 ${t}</li>`).join('')}</ul>`;
+  const now=new Date();
+  const entry={mood,emoji:data.emoji,date:now.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit'})};
+  state.moods.unshift(entry);
+  if(state.moods.length>14)state.moods=state.moods.slice(0,14);
+  store('moods',state.moods);
+  renderMoodHistory();
+  if(!state.badges.includes('mood1'))awardBadge('mood1');
+  if(state.moods.length>=5&&!state.badges.includes('moods5'))awardBadge('moods5');
+}
+function renderMoodHistory(){
+  const wrap=document.getElementById('mood-history');
+  if(!wrap)return;
+  wrap.innerHTML=state.moods.slice(0,7).map(m=>`<div class="mood-hist-item">${m.emoji} ${m.date}</div>`).join('');
+}
+function loadMoodHistory(){renderMoodHistory();}
+
+// ===== QUICK TEST =====
+function buildQuickTest(){
+  const wrap=document.getElementById('quick-test-items');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  quickTestQs.forEach((q,i)=>{
+    const saved=state.quickTestScores[i]||0;
+    const stars=Array.from({length:5},(_,s)=>`<span class="star-btn" onclick="setScore(${i},${s+1})" id="star-${i}-${s+1}">${s<saved?'⭐':'☆'}</span>`).join('');
+    const div=document.createElement('div');
+    div.className='test-item';
+    div.innerHTML=`<div class="test-question">${q}</div><div class="star-row" id="stars-${i}">${stars}</div>`;
+    wrap.appendChild(div);
+  });
+}
+function setScore(qi,score){
+  state.quickTestScores[qi]=score;
+  store('quickTestScores',state.quickTestScores);
+  const row=document.getElementById('stars-'+qi);
+  row.querySelectorAll('.star-btn').forEach((s,i)=>s.textContent=i<score?'⭐':'☆');
+}
+function calcQuickTest(){
+  const total=quickTestQs.reduce((_,q,i)=>_+(state.quickTestScores[i]||0),0);
+  const max=quickTestQs.length*5;
+  const pct=Math.round((total/max)*100);
+  let icon,msg,detail;
+  if(pct<40){icon='🌱';msg='Necesitas volver a ti.';detail='Es momento de poner tu bienestar en el centro. Empieza con algo pequeño hoy: una pausa, un té, una respiración consciente.';}
+  else if(pct<65){icon='🌷';msg='Vas por buen camino.';detail='Hay avances reales en tu autocuidado. Sigue identificando qué áreas necesitan más atención y dales espacio.';}
+  else if(pct<85){icon='🌿';msg='Construyendo una relación sana.';detail='Tu autocuidado es visible y consistente. Celebra lo que ya estás haciendo y continúa cultivando estos hábitos.';}
+  else{icon='🌳';msg='¡Estás construyendo una relación sana contigo misma!';detail='Tu compromiso con el autocuidado es profundo y genuino. Eres un ejemplo de que el amor propio se construye con práctica diaria.';}
+  const res=document.getElementById('quick-test-result');
+  res.classList.add('show');
+  document.getElementById('qt-icon').textContent=icon;
+  document.getElementById('qt-msg').textContent=msg;
+  document.getElementById('qt-detail').textContent=detail;
+}
+
+// ===== PROFILE =====
+function buildProfileTest(){
+  const wrap=document.getElementById('profile-questions');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  profileQs.forEach((pq,pi)=>{
+    const div=document.createElement('div');
+    div.className='card';div.style.marginBottom='1.2rem';
+    div.innerHTML=`<div class="profile-q-text">${pi+1}. ${pq.q}</div>${pq.opts.map((o,oi)=>`<div class="profile-option" onclick="selectProfileOpt(${pi},${oi},this)"><input type="radio" name="pq${pi}" value="${oi}" ${state.profileAnswers[pi]===oi?'checked':''}> <div class="profile-option-text">${o}</div></div>`).join('')}`;
+    wrap.appendChild(div);
+  });
+}
+function selectProfileOpt(qi,oi,el){
+  state.profileAnswers[qi]=oi;
+  store('profileAnswers',state.profileAnswers);
+  el.closest('.card').querySelectorAll('.profile-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function calcProfile(){
+  const answered=Object.keys(state.profileAnswers).length;
+  if(answered<profileQs.length){showToast('Por favor responde todas las preguntas');return;}
+  const total=Object.values(state.profileAnswers).reduce((a,b)=>a+b,0);
+  const avg=total/profileQs.length;
+  let idx=avg<1?0:avg<2?1:avg<3?2:3;
+  const pr=profileResults[idx];
+  const res=document.getElementById('profile-result');
+  res.classList.add('show');
+  res.innerHTML=`<div class="profile-icon">${pr.icon}</div><h2>${pr.name}</h2><p>${pr.desc}</p>`;
+  if(!state.badges.includes('profile1'))awardBadge('profile1');
+  showToast('✨ Perfil calculado');
+}
+
+// ===== ORACLE =====
+let lastOracleIdx=-1;
+function drawOracle(){
+  let idx;do{idx=Math.floor(Math.random()*oracleMessages.length);}while(idx===lastOracleIdx&&oracleMessages.length>1);
+  lastOracleIdx=idx;
+  const card=document.getElementById('oracle-card');
+  const text=document.getElementById('oracle-text');
+  card.classList.remove('flip');
+  void card.offsetWidth;
+  card.classList.add('flip');
+  setTimeout(()=>{text.textContent=oracleMessages[idx];},250);
+  state.oracleHistory.unshift({text:oracleMessages[idx],date:new Date().toLocaleDateString('es-ES')});
+  if(state.oracleHistory.length>5)state.oracleHistory=state.oracleHistory.slice(0,5);
+  store('oracleHistory',state.oracleHistory);
+  renderOracleHistory();
+  if(!state.badges.includes('oracle1'))awardBadge('oracle1');
+}
+function renderOracleHistory(){
+  const wrap=document.getElementById('oracle-history');
+  if(!wrap)return;
+  wrap.innerHTML=state.oracleHistory.map(o=>`<div class="card"><div style="font-size:0.8rem;color:var(--pink-light);margin-bottom:0.3rem;">📅 ${o.date}</div><div style="font-style:italic;color:var(--text-muted);font-size:0.9rem;">"${o.text}"</div></div>`).join('');
+}
+function loadOracleHistory(){renderOracleHistory();}
+
+// ===== CHALLENGES =====
+let currentChallengeData=null;
+function newChallenge(){
+  const idx=Math.floor(Math.random()*challenges.length);
+  currentChallengeData=challenges[idx];
+  state.currentChallenge=idx;
+  store('currentChallenge',idx);
+  renderChallenge(idx);
+}
+function renderChallenge(idx){
+  const c=challenges[idx];
+  if(!c)return;
+  document.getElementById('challenge-emoji').textContent=c.emoji;
+  document.getElementById('challenge-text').textContent=c.text;
+  document.getElementById('challenge-sub').textContent=c.sub;
+}
+function completeChallenge(){
+  state.challengesCompleted++;
+  store('challengesCompleted',state.challengesCompleted);
+  renderChallengeCount();
+  showToast('🏆 ¡Desafío completado! Bien hecho.');
+  if(!state.badges.includes('challenge1'))awardBadge('challenge1');
+  if(state.challengesCompleted>=5&&!state.badges.includes('challenges5'))awardBadge('challenges5');
+  newChallenge();
+}
+function renderChallengeCount(){
+  const el=document.getElementById('challenge-count');
+  if(el)el.textContent=state.challengesCompleted;
+  const fill=document.getElementById('challenge-fill');
+  if(fill)fill.style.width=Math.min(100,(state.challengesCompleted/20)*100)+'%';
+}
+
+// ===== AWARENESS =====
+function buildAwareness(){
+  const list=document.getElementById('awareness-list');
+  if(!list)return;
+  list.innerHTML='';
+  awarenessQs.forEach((q,i)=>{
+    const key='aw'+i;
+    const saved=state.reflections[key]||'';
+    const div=document.createElement('div');
+    div.className='awareness-q';
+    div.innerHTML=`<div class="awareness-q-text">🔥 ${q}</div><textarea class="reflection-input" id="aw-${i}" placeholder="Tu respuesta honesta...">${saved}</textarea><button class="save-note-btn" onclick="saveAwareness(${i})">💾 Guardar</button>`;
+    list.appendChild(div);
+  });
+}
+function saveAwareness(i){
+  const val=document.getElementById('aw-'+i).value;
+  state.reflections['aw'+i]=val;
+  store('reflections',state.reflections);
+  showToast('✨ Guardado');
+}
+
+// ===== DIARY =====
+function saveDiaryEntry(){
+  const input=document.getElementById('diary-input');
+  const text=input.value.trim();
+  if(!text){showToast('Escribe algo primero 💗');return;}
+  const entry={text,date:new Date().toLocaleString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})};
+  state.diaryEntries.unshift(entry);
+  store('diaryEntries',state.diaryEntries);
+  input.value='';
+  renderDiary();
+  showToast('📔 Entrada guardada');
+  if(!state.badges.includes('diary1'))awardBadge('diary1');
+}
+function renderDiary(){
+  const wrap=document.getElementById('diary-entries');
+  if(!wrap)return;
+  if(!state.diaryEntries.length){wrap.innerHTML='<p style="color:var(--text-muted);font-size:0.9rem;text-align:center;padding:1rem;">Tu diario está vacío. Empieza escribiendo cómo te sientes hoy 💙</p>';return;}
+  wrap.innerHTML=state.diaryEntries.map((e,i)=>`<div class="diary-entry"><button class="diary-entry-del" onclick="deleteDiary(${i})" title="Eliminar">🗑</button><div class="diary-entry-date">📅 ${e.date}</div><div class="diary-entry-text">${e.text.replace(/\n/g,'<br>')}</div></div>`).join('');
+}
+function deleteDiary(i){
+  state.diaryEntries.splice(i,1);
+  store('diaryEntries',state.diaryEntries);
+  renderDiary();
+}
+function loadDiary(){renderDiary();}
+
+// ===== CHECKLIST =====
+function buildChecklist(){
+  const wrap=document.getElementById('checklist-items');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  checklistItems.forEach((item,i)=>{
+    const checked=state.checklist[i]||false;
+    const div=document.createElement('div');
+    div.className='checklist-item'+(checked?' checked':'');
+    div.onclick=()=>toggleCheck(i,div);
+    div.innerHTML=`<div class="check-box">${checked?'✓':''}</div><div class="check-label">${item}</div>`;
+    wrap.appendChild(div);
+  });
+  updateCheckProgress();
+}
+function toggleCheck(i,el){
+  const checked=!state.checklist[i];
+  state.checklist[i]=checked;
+  store('checklist',state.checklist);
+  el.classList.toggle('checked',checked);
+  el.querySelector('.check-box').textContent=checked?'✓':'';
+  if(!state.badges.includes('check1'))awardBadge('check1');
+  const total=Object.values(state.checklist).filter(Boolean).length;
+  if(total>=10&&!state.badges.includes('checks10'))awardBadge('checks10');
+  updateCheckProgress();
+}
+function updateCheckProgress(){
+  const total=checklistItems.length;
+  const done=Object.values(state.checklist).filter(Boolean).length;
+  const pct=Math.round((done/total)*100);
+  const el=document.getElementById('check-pct');
+  const fill=document.getElementById('check-fill');
+  if(el)el.textContent=pct+'%';
+  if(fill)fill.style.width=pct+'%';
+}
+function resetChecklist(){
+  state.checklist={};store('checklist',state.checklist);
+  buildChecklist();showToast('✅ Semana reiniciada');
+}
+
+// ===== BADGES =====
+function buildBadges(){
+  const grid=document.getElementById('badges-grid');
+  if(!grid)return;
+  grid.innerHTML=badgesData.map(b=>`<div class="badge ${state.badges.includes(b.condition)?'earned':''}" id="badge-${b.condition}"><div class="badge-icon">${b.icon}</div><div class="badge-name">${b.name}</div><div class="badge-desc">${b.desc}</div></div>`).join('');
+}
+function awardBadge(condition){
+  if(state.badges.includes(condition))return;
+  state.badges.push(condition);
+  store('badges',state.badges);
+  const badge=badgesData.find(b=>b.condition===condition);
+  if(badge){
+    showToast(`🏆 ¡Nuevo logro: ${badge.name}!`);
+    const el=document.getElementById('badge-'+condition);
+    if(el)el.classList.add('earned');
+  }
+}
+
+// ===== ROULETTE =====
+const rouletteItems=[
+  {text:'Escaneo corporal\nde ternura',color:'#e91e8c'},
+  {text:'5 min de\nrespiración',color:'#c084fc'},
+  {text:'Escribe 3 cosas\nque hiciste bien',color:'#9333ea'},
+  {text:'Bebe un vaso\nde agua consciente',color:'#e91e8c'},
+  {text:'Caminar 10 min\nsin teléfono',color:'#c084fc'},
+  {text:'Escribe en\ntu diario',color:'#9333ea'},
+  {text:'Una pausa de\n20 minutos',color:'#e91e8c'},
+  {text:'Di algo amoroso\nen el espejo',color:'#c084fc'}
+];
+let rouletteAngle=0,rouletteSpinning=false;
+function initRoulette(){
+  const canvas=document.getElementById('roulette-canvas');
+  if(!canvas)return;
+  drawWheel(0);
+}
+function drawWheel(angle){
+  const canvas=document.getElementById('roulette-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  const cx=W/2,cy=H/2,r=cx-10;
+  const n=rouletteItems.length;
+  ctx.clearRect(0,0,W,H);
+  rouletteItems.forEach((item,i)=>{
+    const start=angle+i*(Math.PI*2/n);
+    const end=start+(Math.PI*2/n);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.closePath();
+    ctx.fillStyle=item.color+(i%2===0?'dd':'aa');ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.lineWidth=2;ctx.stroke();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(start+(Math.PI/n));
+    ctx.textAlign='left';ctx.fillStyle='#fff';ctx.font='bold 11px Nunito,sans-serif';
+    const lines=item.text.split('\n');
+    lines.forEach((l,li)=>{ctx.fillText(l,r*0.35,li*14-7*(lines.length-1));});
+    ctx.restore();
+  });
+  // Center
+  ctx.beginPath();ctx.arc(cx,cy,22,0,Math.PI*2);
+  const grd=ctx.createRadialGradient(cx,cy,4,cx,cy,22);
+  grd.addColorStop(0,'#ff6b9d');grd.addColorStop(1,'#e91e8c');
+  ctx.fillStyle=grd;ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  // Pointer
+  ctx.beginPath();ctx.moveTo(cx+r-4,cy);ctx.lineTo(cx+r+14,cy-8);ctx.lineTo(cx+r+14,cy+8);ctx.closePath();
+  ctx.fillStyle='#fff';ctx.fill();
+}
+function spinRoulette(){
+  if(rouletteSpinning)return;
+  rouletteSpinning=true;
+  const btn=document.getElementById('spin-btn');
+  if(btn)btn.disabled=true;
+  document.getElementById('roulette-result').classList.remove('show');
+  const spins=5+Math.random()*5;
+  const target=rouletteAngle+spins*Math.PI*2+Math.random()*Math.PI*2;
+  const duration=4000;
+  const start=performance.now();
+  const startAngle=rouletteAngle;
+  function animate(now){
+    const t=Math.min(1,(now-start)/duration);
+    const ease=1-Math.pow(1-t,4);
+    rouletteAngle=startAngle+(target-startAngle)*ease;
+    drawWheel(rouletteAngle);
+    if(t<1){requestAnimationFrame(animate);}
+    else{
+      rouletteSpinning=false;
+      if(btn)btn.disabled=false;
+      const n=rouletteItems.length;
+      const slice=Math.PI*2/n;
+      const norm=((Math.PI*2)-(rouletteAngle%(Math.PI*2)))%(Math.PI*2);
+      const idx=Math.floor(norm/slice)%n;
+      const item=rouletteItems[idx];
+      const res=document.getElementById('roulette-result');
+      document.getElementById('roulette-result-text').textContent='🌸 Tu ejercicio: '+item.text.replace('\n',' ');
+      res.classList.add('show');
+      if(!state.badges.includes('roulette1'))awardBadge('roulette1');
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+// ===== SCRATCH =====
+const scratchMessages=[
+  {icon:'💗',text:'Mereces descansar sin justificarte.'},
+  {icon:'🌸',text:'Tu valor no depende de tu productividad.'},
+  {icon:'✨',text:'Hoy, un gesto de amor solo para ti.'},
+  {icon:'🌙',text:'Permítete sentir. Todas las emociones son válidas.'},
+  {icon:'🌺',text:'Tus límites son sagrados.'},
+  {icon:'💫',text:'Eres suficiente exactamente como eres.'},
+  {icon:'🦋',text:'Sanar no es lineal. Y eso está bien.'},
+  {icon:'🌻',text:'Cuídate como cuidas a quien más amas.'},
+];
+function initScratch(){
+  const grid=document.getElementById('scratch-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  const revealed=state.scratchRevealed;
+  scratchMessages.forEach((m,i)=>{
+    const div=document.createElement('div');
+    div.className='scratch-card';
+    div.innerHTML=`<div class="scratch-content"><div class="s-icon">${m.icon}</div><div class="s-text">${m.text}</div></div><div class="scratch-overlay ${revealed.includes(i)?'scratched':''}" id="so-${i}"><div style="font-size:2rem;">✨</div><div class="scratch-hint">Toca para revelar</div></div>`;
+    div.onclick=()=>scratchReveal(i);
+    grid.appendChild(div);
+  });
+}
+function scratchReveal(i){
+  const overlay=document.getElementById('so-'+i);
+  if(!overlay||overlay.classList.contains('scratched'))return;
+  overlay.classList.add('scratched');
+  if(!state.scratchRevealed.includes(i)){state.scratchRevealed.push(i);store('scratchRevealed',state.scratchRevealed);}
+}
+function resetScratch(){
+  state.scratchRevealed=[];store('scratchRevealed',[]);initScratch();
+}
+
+// ===== QUIZ =====
+let quizData={idx:0,score:0,answered:false};
+function initQuiz(){
+  quizData={idx:0,score:0,answered:false};
+  renderQuizQuestion();
+}
+function renderQuizQuestion(){
+  const qb=document.getElementById('quiz-question-box');
+  const qf=document.getElementById('quiz-final');
+  const qp=document.getElementById('quiz-progress');
+  if(!qb)return;
+  if(quizData.idx>=quizQs.length){
+    qb.style.display='none';
+    qf.classList.add('show');
+    qf.style.display='block';
+    const score=quizData.score;
+    const total=quizQs.length;
+    const pct=Math.round((score/total)*100);
+    document.getElementById('quiz-score-circle').textContent=score+'/'+total;
+    const grades=[{t:50,g:'Sigue leyendo 🌱',m:'Cada capítulo te dará más herramientas. ¡No te rindas!'},{t:70,g:'Buen progreso 🌷',m:'Estás absorbiendo las ideas clave. Continúa practicando.'},{t:90,g:'Muy bien 🌿',m:'Tienes una excelente comprensión del autocuidado.'},{t:101,g:'¡Experta en autocuidado! 🌳',m:'Dominás el contenido. Ahora aplícalo con amor.'}];
+    const grade=grades.find(g=>pct<g.t)||grades[grades.length-1];
+    document.getElementById('quiz-grade').textContent=grade.g;
+    document.getElementById('quiz-msg').textContent=grade.m;
+    if(qp)qp.textContent='';
+    return;
+  }
+  qb.style.display='block';
+  qf.classList.remove('show');qf.style.display='none';
+  const q=quizQs[quizData.idx];
+  if(qp)qp.textContent=`Pregunta ${quizData.idx+1} de ${quizQs.length}`;
+  quizData.answered=false;
+  qb.innerHTML=`<div class="quiz-q-text">${q.q}</div><div class="quiz-options">${q.opts.map((o,i)=>`<button class="quiz-option" onclick="answerQuiz(${i},this)">${o}</button>`).join('')}</div>`;
+}
+function answerQuiz(selectedIdx,btn){
+  if(quizData.answered)return;
+  quizData.answered=true;
+  const q=quizQs[quizData.idx];
+  const allBtns=btn.closest('.quiz-options').querySelectorAll('.quiz-option');
+  allBtns.forEach((b,i)=>{
+    if(i===q.correct)b.classList.add('correct');
+    else if(i===selectedIdx&&selectedIdx!==q.correct)b.classList.add('wrong');
+  });
+  if(selectedIdx===q.correct)quizData.score++;
+  setTimeout(()=>{quizData.idx++;renderQuizQuestion();},1200);
+}
+function resetQuiz(){initQuiz();}
+
+// ===== TOAST =====
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ===== CAROUSEL (concepts carousel on home) =====
+// Full carousel is embedded in section panels; carousel arrows for chapters
+
+// ===== RUN =====
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
